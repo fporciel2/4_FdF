@@ -12,4 +12,4 @@ You should have received a copy of the GNU General Public License along with thi
 You can contact the author at:
 
 fporciel@student.42roma.it
-This source code collection contains personal implementations of some standard C language functions for educational purposes. It is not recommended to use it for purposes other than carrying out the projects assigned to students by the school 42.
+It is not recommended to use this program for purposes other than carrying out the projects assigned to students by the school 42.
