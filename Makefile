@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 09:47:25 by fporciel          #+#    #+#              #
-#    Updated: 2023/05/21 12:07:41 by fporciel         ###   ########.fr        #
+#    Updated: 2023/05/21 13:23:28 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # 
@@ -45,7 +45,9 @@ CFLAGS := -Wall -Wextra -Werror -O3 -c
 LD_FLAGS := -L./mlx_linux -lmlx -lXext -lX11 -lm
 
 $(NAME): $(LIB) $(OBJS)
-	$(CC) -o $@ $(OBJS) $(LIBS) $(LD_FLAGS)
+	$(CC) fdf.c -o $@ $(OBJS) $(LIBS) $(LD_FLAGS)
+
+all: $(NAME)
 
 $(LIB): $(OBJS) $(HEADERS) $(LIBS)
 	ar rcs $@ $^
@@ -61,3 +63,12 @@ configure:
 
 all-subdirs: $(SUBDIRS)
 	for dir in $^; do $(MAKE) -C $$dir done
+
+clean:
+	rm -f $(shell find . -type f -name ".o")
+
+fclean: clean
+	rm -f fdf
+	rm -f $(shell find . -type f -name ".a")
+
+re: fclean all
