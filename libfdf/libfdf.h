@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/21 08:57:33 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/21 17:11:44 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -35,6 +35,7 @@
 # define LIBFDF_H
 # include "../mlx_linux/mlx.h"
 # include <stdlib.h>
+# include <math.h>
 
 # ifndef ESC_KEY
 #  define ESC_KEY 53

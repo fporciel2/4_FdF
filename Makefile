@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 09:47:25 by fporciel          #+#    #+#              #
-#    Updated: 2023/05/21 13:23:28 by fporciel         ###   ########.fr        #
+#    Updated: 2023/05/21 18:07:47 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # 
@@ -31,44 +31,44 @@
 #- fporciel@student.42roma.it
 #
 
-.PHONY: all clean fclean re all-subdirs configure
+.PHONY: all clean fclean re mlx-config-start make-subdirs
 .DEFAULT_GOAL := $(NAME)
 NAME := fdf
-LIB := binfdf.a
-LIBS := $(wildcard */*.a)
-SUBDIRS := $(filter-out mlx_linux, $(wildcard */*.a))
-SRCS := $(wildcard fdf_*.c) $(wildcard **/fdf_*.c) $(wildcard **/mlx_*.c)
-HEADERS := $(wildcard *.h) $(wildcard **/*.h)
-OBJS := $(patsubst %.c, %.o, $(notdir $(SRCS)))
+LIB := fdf.a
+LIBS := $(wildcard **/*.a)
+SRCS := $(wildcard fdf*.c)
+HEADERS := $(wildcard *.h)
+OBJS := $(patsubst %.c, %.o, $(SRCS))
+SUBDIRS := $(filter-out mlx_linux/%, $(wildcard */))
 CC := gcc
 CFLAGS := -Wall -Wextra -Werror -O3 -c
-LD_FLAGS := -L./mlx_linux -lmlx -lXext -lX11 -lm
+LD_FLAGS := -lfdf -lXext -lX11 -lm
 
-$(NAME): $(LIB) $(OBJS)
-	$(CC) fdf.c -o $@ $(OBJS) $(LIBS) $(LD_FLAGS)
+$(NAME): $(LIB)
+	$(CC) $(CFLAGS) fdf.c $(LD_FLAGS) -o $@
 
 all: $(NAME)
 
-$(LIB): $(OBJS) $(HEADERS) $(LIBS)
-	ar rcs $@ $^
+$(LIB): mlx-config-start make-subdirs $(OBJS)
+	ar rcs $(LIB) $(OBJS) $(HEADERS) $(LIBS)
 
 $(OBJS): $(SRCS) $(HEADERS)
 	$(CC) $(CFLAGS) $^
 
-$(LIBS): all-subdirs configure
-
-configure:
+mlx-config-start:
 	cd mlx_linux && ./configure
-	cd ..
 
-all-subdirs: $(SUBDIRS)
-	for dir in $^; do $(MAKE) -C $$dir done
+make-subdirs:
+	for dir in $(SUBDIRS); do $(MAKE) -C $$dir; done
 
 clean:
-	rm -f $(shell find . -type f -name ".o")
+	rm -f $(OBJS) $(wildcard **/*.o)
 
 fclean: clean
-	rm -f fdf
-	rm -f $(shell find . -type f -name ".a")
+	rm -f $(LIBS) $(LIB) $(NAME)
 
 re: fclean all
+
+norm:
+	norminette $(filter-out mlx_linux/%, $(SRCS))
+
