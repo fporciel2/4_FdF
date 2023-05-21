@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 09:47:25 by fporciel          #+#    #+#              #
-#    Updated: 2023/05/21 18:07:47 by fporciel         ###   ########.fr        #
+#    Updated: 2023/05/21 20:16:34 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # 
@@ -31,29 +31,31 @@
 #- fporciel@student.42roma.it
 #
 
-.PHONY: all clean fclean re mlx-config-start make-subdirs
+.PHONY: all clean fclean re mlx-config-start make-subdirs norm
 .DEFAULT_GOAL := $(NAME)
 NAME := fdf
-LIB := fdf.a
+LIB := progfdf.a
 LIBS := $(wildcard **/*.a)
 SRCS := $(wildcard fdf*.c)
 HEADERS := $(wildcard *.h)
 OBJS := $(patsubst %.c, %.o, $(SRCS))
-SUBDIRS := $(filter-out mlx_linux/%, $(wildcard */))
+SUBDIRS := $(filter-out ./mlx_linux/%, $(wildcard ./*/))
+LIB_DIRS := $(addprefix ./, $(wildcard */))
+LIB_FLAGS := $(addprefix -L, $(LIB_DIRS))
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror -O3 -c
-LD_FLAGS := -lfdf -lXext -lX11 -lm
+CFLAGS := -Wall -Wextra -Werror -O3
+LD_FLAGS := $(LIB_FLAGS) -lfdf -lmlx -lft -lXext -lX11 -lm
 
 $(NAME): $(LIB)
-	$(CC) $(CFLAGS) fdf.c $(LD_FLAGS) -o $@
+	$(CC) $(CFLAGS) $(addprefix -I, $(LIB_DIRS)) progfdf.a $(LD_FLAGS) -o $@
 
 all: $(NAME)
 
 $(LIB): mlx-config-start make-subdirs $(OBJS)
-	ar rcs $(LIB) $(OBJS) $(HEADERS) $(LIBS)
+	ar rcs $@ $(OBJS) $(HEADERS) $(LIBS)
 
 $(OBJS): $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) $^
+	$(CC) $(CFLAGS) -c $^
 
 mlx-config-start:
 	cd mlx_linux && ./configure
@@ -70,5 +72,5 @@ fclean: clean
 re: fclean all
 
 norm:
-	norminette $(filter-out mlx_linux/%, $(SRCS))
+	norminette $(filter-out mlx_linux/%, $(SRCS) $(wildcard **/*.c))
 

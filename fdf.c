@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:56:39 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/21 12:57:44 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/21 19:33:34 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,7 +33,7 @@
 
 #include "fdf.h"
 
-int	fdf(void)
+int	main(void)
 {
 	fdf_start_process();
 	return (0);
