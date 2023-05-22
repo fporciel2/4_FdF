@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 09:47:25 by fporciel          #+#    #+#              #
-#    Updated: 2023/05/21 20:16:34 by fporciel         ###   ########.fr        #
+#    Updated: 2023/05/22 14:34:44 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # 
@@ -39,7 +39,7 @@ LIBS := $(wildcard **/*.a)
 SRCS := $(wildcard fdf*.c)
 HEADERS := $(wildcard *.h)
 OBJS := $(patsubst %.c, %.o, $(SRCS))
-SUBDIRS := $(filter-out ./mlx_linux/%, $(wildcard ./*/))
+SUBDIRS := $(filter-out ./mlx_linux/%, $(wildcard */))
 LIB_DIRS := $(addprefix ./, $(wildcard */))
 LIB_FLAGS := $(addprefix -L, $(LIB_DIRS))
 CC := gcc
