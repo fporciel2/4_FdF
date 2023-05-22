@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 09:44:43 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/21 09:46:32 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:20:53 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,9 +33,15 @@
 
 #include "./libfdf.h"
 
-int	fdf_close_window(void *param)
+int	fdf_close_window(t_xvar *xvar, XEvent *event, t_win_list *win)
 {
-	(void)param;
-	exit(0);
-	return (0);
+	(void)xvar;
+	(void)win;
+	if (event->type == 17)
+	{
+		exit(0);
+		return (0);
+	}
+	else
+		return (0);
 }

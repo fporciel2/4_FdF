@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 09:47:25 by fporciel          #+#    #+#              #
-#    Updated: 2023/05/22 14:34:44 by fporciel         ###   ########.fr        #
+#    Updated: 2023/05/22 17:40:02 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # 
@@ -43,7 +43,7 @@ SUBDIRS := $(filter-out ./mlx_linux/%, $(wildcard */))
 LIB_DIRS := $(addprefix ./, $(wildcard */))
 LIB_FLAGS := $(addprefix -L, $(LIB_DIRS))
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror -O3
+CFLAGS := -Wall -Wextra -Werror -O3 -g
 LD_FLAGS := $(LIB_FLAGS) -lfdf -lmlx -lft -lXext -lX11 -lm
 
 $(NAME): $(LIB)

@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/21 17:11:44 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/22 17:26:04 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -34,15 +34,14 @@
 #ifndef LIBFDF_H
 # define LIBFDF_H
 # include "../mlx_linux/mlx.h"
+# include "../mlx_linux/mlx_int.h"
+# include "../libft/libft.h"
 # include <stdlib.h>
 # include <math.h>
 
-# ifndef ESC_KEY
-#  define ESC_KEY 53
-# endif
-
 int		fdf_start_process(void);
 void	fdf_open_window(void);
-int		fdf_close_window(void *param);
+int		fdf_close_window(t_xvar *xvar, XEvent *event, t_win_list *win);
+int		fdf_esc_window(int keycode, void *param);
 
 #endif
