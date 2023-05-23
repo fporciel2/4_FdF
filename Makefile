@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 09:47:25 by fporciel          #+#    #+#              #
-#    Updated: 2023/05/22 17:40:02 by fporciel         ###   ########.fr        #
+#    Updated: 2023/05/23 20:34:57 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # 
@@ -31,7 +31,8 @@
 #- fporciel@student.42roma.it
 #
 
-.PHONY: all clean fclean re mlx-config-start make-subdirs norm
+.PHONY: all clean fclean re mlx-config-start make-subdirs norm \
+		download-minilibx clean-minilibx
 .DEFAULT_GOAL := $(NAME)
 NAME := fdf
 LIB := progfdf.a
@@ -39,7 +40,7 @@ LIBS := $(wildcard **/*.a)
 SRCS := $(wildcard fdf*.c)
 HEADERS := $(wildcard *.h)
 OBJS := $(patsubst %.c, %.o, $(SRCS))
-SUBDIRS := $(filter-out ./mlx_linux/%, $(wildcard */))
+SUBDIRS := $(filter-out %mlx_linux/, $(wildcard */))
 LIB_DIRS := $(addprefix ./, $(wildcard */))
 LIB_FLAGS := $(addprefix -L, $(LIB_DIRS))
 CC := gcc
@@ -70,6 +71,13 @@ fclean: clean
 	rm -f $(LIBS) $(LIB) $(NAME)
 
 re: fclean all
+
+download-minilibx:
+	git clone git@github.com:42Paris/minilibx-linux.git
+	mv minilibx-linux/ mlx_linux/
+
+clean-minilibx: fclean
+	rm -rfd mlx_linux
 
 norm:
 	norminette $(filter-out mlx_linux/%, $(SRCS) $(wildcard **/*.c))
