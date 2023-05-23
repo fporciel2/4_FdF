@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/22 17:26:04 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/23 14:06:12 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -41,7 +41,7 @@
 
 int		fdf_start_process(void);
 void	fdf_open_window(void);
-int		fdf_close_window(t_xvar *xvar, XEvent *event, t_win_list *win);
+int		fdf_close_window(void *param);
 int		fdf_esc_window(int keycode, void *param);
 
 #endif
