@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 09:47:25 by fporciel          #+#    #+#              #
-#    Updated: 2023/05/23 20:34:57 by fporciel         ###   ########.fr        #
+#    Updated: 2023/05/24 14:36:56 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # 
@@ -65,7 +65,7 @@ make-subdirs:
 	for dir in $(SUBDIRS); do $(MAKE) -C $$dir; done
 
 clean:
-	rm -f $(OBJS) $(wildcard **/*.o)
+	rm -f $(OBJS) $(wildcard **/*.o) $(wildcard *.gch) $(wildcard **/*.gch)
 
 fclean: clean
 	rm -f $(LIBS) $(LIB) $(NAME)

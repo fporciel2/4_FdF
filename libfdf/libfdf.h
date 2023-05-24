@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/23 14:31:49 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/24 14:16:31 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -39,8 +39,8 @@
 # include <stdlib.h>
 # include <math.h>
 
-int		fdf_start_process(void);
-void	fdf_open_window(void);
+int		fdf_start_process(int width, int height);
+void	fdf_open_window(int width, int height);
 int		fdf_close_window(void *param);
 int		fdf_esc_window(int keycode, void *param);
 

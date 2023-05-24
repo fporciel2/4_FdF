@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:45:55 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/21 19:33:06 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/24 14:41:52 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -37,6 +37,14 @@
 # include "./libft/libft.h"
 # include "./libfdf/libfdf.h"
 
-int	main(void);
+# ifndef DEFAULT_WIDTH
+#  define DEFAULT_WIDTH 1280
+# endif
+
+# ifndef DEFAULT_HEIGHT
+#  define DEFAULT_HEIGHT 720
+# endif
+
+int	main(int argc, char **argv);
 
 #endif

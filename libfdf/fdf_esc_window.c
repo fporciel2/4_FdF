@@ -6,7 +6,7 @@
 /*   By: fporciel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 17:03:22 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/22 17:06:25 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/24 14:07:05 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,7 +33,7 @@
 
 #include "./libfdf.h"
 
-int fdf_esc_window(int keycode, void *param)
+int	fdf_esc_window(int keycode, void *param)
 {
 	(void)param;
 	if (keycode == 0xff1b)

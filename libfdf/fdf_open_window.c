@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 09:35:14 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/22 17:34:23 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/24 14:15:40 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,14 +33,14 @@
 
 #include "./libfdf.h"
 
-void	fdf_open_window(void)
+void	fdf_open_window(int width, int height)
 {
 	void	*mlx;
 	void	*window;
 
 	mlx = mlx_init();
-	window = mlx_new_window(mlx, 800, 600, "Fil de fer du cerveau");
+	window = mlx_new_window(mlx, width, height, "Fil de fer du cerveau");
 	mlx_hook(window, 17, 0L, &fdf_close_window, NULL);
-	mlx_hook(window, 2, (1L<<0), &fdf_esc_window, NULL);
+	mlx_hook(window, 2, (1L << 0), &fdf_esc_window, NULL);
 	mlx_loop(mlx);
 }
