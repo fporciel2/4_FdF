@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:56:39 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/24 14:13:32 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:01:45 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -38,8 +38,8 @@ int	main(int argc, char *argv[])
 	int	width;
 	int	height;
 
-	width = 1280;
-	height = 720;
+	width = DEFAULT_WIDTH;
+	height = DEFAULT_HEIGHT;
 	if (argc == 3)
 	{
 		width = ft_atoi(argv[1]);

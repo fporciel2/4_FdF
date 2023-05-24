@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/24 14:16:31 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/24 18:14:29 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -39,9 +39,16 @@
 # include <stdlib.h>
 # include <math.h>
 
+typedef struct	s_focus
+{
+	char		isfocused;
+}				t_focus;
+
 int		fdf_start_process(int width, int height);
 void	fdf_open_window(int width, int height);
 int		fdf_close_window(void *param);
 int		fdf_esc_window(int keycode, void *param);
+int		fdf_losing_focus(void *param);
+int		fdf_gaining_focus(void *param);
 
 #endif
