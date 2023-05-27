@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 09:35:14 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/27 09:44:49 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/27 15:13:30 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,11 +33,10 @@
 
 #include "./libfdf.h"
 
-void	fdf_open_window(int width, int height, int fd)
+void	fdf_open_window(int width, int height)
 {
 	t_fdf_data	data;
 
-	data.fd = fd;
 	data.mlx = mlx_init();
 	data.window = mlx_new_window(data.mlx, width, height, "FdF");
 	mlx_hook(window, 17, 0L, &fdf_close_window, NULL);

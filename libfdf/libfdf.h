@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/27 09:48:12 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/27 15:12:54 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -46,8 +46,32 @@ typedef struct	s_fdf_data
 {
 	void		*mlx;
 	void		*window;
-	int			fd;
 }				t_fdf_data;
+
+typedef struct			s_map_data
+{
+	struct s_map_data	*map_start;
+	struct s_map_data	*right_node;
+	struct s_map_data	*left_node;
+	struct s_map_data	*up_node;
+	struct s_map_data	*bot_node;
+	long long int		node_axis;
+	long long int		node_ordinate;
+	long long int		node_altitude;
+	long long int		node_position_x;
+	long long int		node_position_y;
+	long long int		node_position_z;
+}						t_map_data;
+
+typedef struct		s_camera_data
+{
+	long long int	eye_x;
+	long long int	eye_y;
+	long long int	eye_z;
+	t_map_data		*lookat_point;
+	long long int	up_vector;
+	long long int	right_vector;
+}					t_camera_data;
 
 int		fdf_start_process(int fd, int width, int height);
 void	fdf_open_window(int width, int height, int fd);
