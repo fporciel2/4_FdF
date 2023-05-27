@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/24 18:14:29 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/27 09:48:12 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -36,19 +36,22 @@
 # include "../mlx_linux/mlx.h"
 # include "../mlx_linux/mlx_int.h"
 # include "../libft/libft.h"
+# include <stdio.h>
+# include <string.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include <math.h>
 
-typedef struct	s_focus
+typedef struct	s_fdf_data
 {
-	char		isfocused;
-}				t_focus;
+	void		*mlx;
+	void		*window;
+	int			fd;
+}				t_fdf_data;
 
-int		fdf_start_process(int width, int height);
-void	fdf_open_window(int width, int height);
+int		fdf_start_process(int fd, int width, int height);
+void	fdf_open_window(int width, int height, int fd);
 int		fdf_close_window(void *param);
 int		fdf_esc_window(int keycode, void *param);
-int		fdf_losing_focus(void *param);
-int		fdf_gaining_focus(void *param);
 
 #endif

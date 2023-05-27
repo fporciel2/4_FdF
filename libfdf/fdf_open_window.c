@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 09:35:14 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/24 18:08:41 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/27 09:44:49 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,18 +33,14 @@
 
 #include "./libfdf.h"
 
-void	fdf_open_window(int width, int height)
+void	fdf_open_window(int width, int height, int fd)
 {
-	t_focus	focus;
-	void	*mlx;
-	void	*window;
+	t_fdf_data	data;
 
-	focus.isfocused = 0;
-	mlx = mlx_init();
-	window = mlx_new_window(mlx, width, height, "Fil de fer du cerveau");
+	data.fd = fd;
+	data.mlx = mlx_init();
+	data.window = mlx_new_window(data.mlx, width, height, "FdF");
 	mlx_hook(window, 17, 0L, &fdf_close_window, NULL);
 	mlx_hook(window, 2, (1L << 0), &fdf_esc_window, NULL);
-	mlx_hook(window, 9, 0L, &fdf_losing_focus, &focus);
-	mlx_hook(window, 10, 0L, &fdf_gaining_focus, &focus);
-	mlx_loop(mlx);
+	mlx_loop(data.mlx);
 }
