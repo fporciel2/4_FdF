@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libfdf.h                                           :+:      :+:    :+:   */
+/*   fdf_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/28 10:49:15 by fporciel         ###   ########.fr       */
+/*   Created: 2023/05/28 08:46:45 by fporciel          #+#    #+#             */
+/*   Updated: 2023/05/28 10:45:20 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -31,54 +31,12 @@
 *- fporciel@student.42roma.it
 */
 
-#ifndef LIBFDF_H
-# define LIBFDF_H
-# include "../mlx_linux/mlx.h"
-# include "../mlx_linux/mlx_int.h"
-# include "../libft/libft.h"
-# include <stdio.h>
-# include <string.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <math.h>
+#include "./libfdf.h"
 
-typedef struct	s_fdf_data
+int	fdf_error(void *param)
 {
-	void		*mlx;
-	void		*window;
-}				t_fdf_data;
-
-typedef struct			s_map_data
-{
-	struct s_map_data	*map_start;
-	struct s_map_data	*right_node;
-	struct s_map_data	*left_node;
-	struct s_map_data	*up_node;
-	struct s_map_data	*bot_node;
-	long long int		node_axis;
-	long long int		node_ordinate;
-	long long int		node_altitude;
-	long long int		node_position_x;
-	long long int		node_position_y;
-	long long int		node_position_z;
-}						t_map_data;
-
-typedef struct		s_camera_data
-{
-	long long int	eye_x;
-	long long int	eye_y;
-	long long int	eye_z;
-	t_map_data		*lookat_point;
-	long long int	up_vector;
-	long long int	right_vector;
-}					t_camera_data;
-
-int		fdf_start_process(int fd, int width, int height);
-void	fdf_open_window(int width, int height, int fd);
-int		fdf_close_window(void *param);
-int		fdf_esc_window(int keycode, void *param);
-int		fdf_error(void *param);
-void	*fdf_free_null(void *param);
-void	*fdf_error_free_null(void *param);
-
-#endif
+	(void)param;
+	perror("Something went wrong");
+	exit(0);
+	return (0);
+}

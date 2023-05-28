@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:58:28 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/27 15:12:33 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/28 10:50:45 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,8 +33,38 @@
 
 #include "./libfdf.h"
 
+static void	store_map_data(size_t count_line, char *line)
+{
+	static t_map_data	*node;
+	char				**splitted_line;
+
+	splitted_line = ft_split(line, 32);
+	if (splitted_line == NULL)
+		fdf_error_free_null(line);
+}
+
 int	fdf_start_process(int fd, int width, int height)
 {
+	char	*line;
+	size_t	count_line;
+
+	count_line = 0;
+	line = (char *)malloc(sizeof(char));
+	if (line == NULL)
+		return (fdf_error(NULL));
+	line[0] = 0;
+	while (line != NULL)
+	{
+		line = fdf_free_null(line);
+		line = get_next_line(fd);
+		if (line != NULL)
+		{
+			count_line++;
+			store_map_data(count_line, line);
+		}
+		else
+			return (fdf_error(NULL));
+	}
 	fdf_open_window(width, height, fd);
 	return (0);
 }
