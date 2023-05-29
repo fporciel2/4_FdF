@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 08:51:21 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/28 10:44:55 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/29 14:29:54 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,8 +33,13 @@
 
 #include "./libfdf.h"
 
-void	*fdf_free_null(void *param)
+void	*fdf_free_null(void *param, void *other_param)
 {
+	if (other_param != NULL)
+	{
+		free(other_param);
+		other_param = NULL;
+	}
 	free(param);
 	param = NULL;
 	return (param);

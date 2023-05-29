@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:58:28 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/28 10:50:45 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:46:34 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,38 +33,38 @@
 
 #include "./libfdf.h"
 
-static void	store_map_data(size_t count_line, char *line)
+static t_map_data	store_map_data(size_t count, char *line, t_map_data *node)
 {
-	static t_map_data	*node;
-	char				**splitted_line;
+	char	**splitted_line;
 
 	splitted_line = ft_split(line, 32);
 	if (splitted_line == NULL)
-		fdf_error_free_null(line);
+		fdf_error_free_null(line, node, splitted_line);
 }
 
 int	fdf_start_process(int fd, int width, int height)
 {
-	char	*line;
-	size_t	count_line;
+	char				*line;
+	size_t				count;
+	static t_map_data	*node;
 
-	count_line = 0;
+	count = 0;
 	line = (char *)malloc(sizeof(char));
 	if (line == NULL)
 		return (fdf_error(NULL));
 	line[0] = 0;
 	while (line != NULL)
 	{
-		line = fdf_free_null(line);
+		line = fdf_free_null(line, NULL);
 		line = get_next_line(fd);
 		if (line != NULL)
 		{
-			count_line++;
-			store_map_data(count_line, line);
+			count++;
+			node = store_map_data(count, line, node);
 		}
 		else
 			return (fdf_error(NULL));
 	}
-	fdf_open_window(width, height, fd);
+	fdf_open_window(width, height, node);
 	return (0);
 }

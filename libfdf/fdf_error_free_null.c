@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 10:45:41 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/28 10:48:27 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:31:36 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,8 +33,26 @@
 
 #include "./libfdf.h"
 
-void	*fdf_error_free_null(void *param)
+void	*fdf_error_free_null(void *param, void *other_param, void **dparam)
 {
+	size_t	i;
+
+	i = 0;
+	if (dparam != NULL)
+	{
+		while (dparam[i] != NULL)
+		{
+			free(dparam[i]);
+			i++;
+		}
+		free(dparam);
+		dparam = NULL;
+	}
+	if (other_param != NULL)
+	{
+		free(other_param);
+		other_param = NULL;
+	}
 	free(param);
 	param = NULL;
 	perror("Something went wrong!!");
