@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:56:39 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/27 08:36:01 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:17:09 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,7 +33,28 @@
 
 #include "fdf.h"
 
-static int	check_fdf_file_string(char *argvone)
+static int	main_check_fdf_window_param(char *width, char *height)
+{
+	size_t	count;
+
+	count = 0;
+	while (width[count])
+	{
+		if ((width[count] < 48) || (width[count] > 57))
+			return (0);
+		count++;
+	}
+	count = 0;
+	while (height[count])
+	{
+		if ((height[count] < 48) || (height[count] > 57))
+			return (0);
+		count++;
+	}
+	return (1);
+}
+
+static int	main_check_fdf_file_string(char *argvone)
 {
 	size_t	len;
 	int		fd;
@@ -41,13 +62,16 @@ static int	check_fdf_file_string(char *argvone)
 	len = ft_strlen(argvone);
 	if ((argvone[len - 1] != 102) || (argvone[len - 2] != 100)
 		|| (argvone[len - 3] != 102) || (argvone[len - 4] != 46))
+	{
+		perror("Invalid filename!");
 		return (0);
+	}
 	fd = open(argvone, O_RDONLY);
 	if (fd != -1)
 		return (fd);
 	else
 	{
-		perror("The file name you passed to the program is not valid!");
+		perror("Invalid filename!");
 		return (0);
 	}
 }
@@ -62,15 +86,18 @@ int	main(int argc, char *argv[])
 	height = DEFAULT_HEIGHT;
 	if ((argc >= 2) && (argc != 3) && (argc < 5))
 	{
-		fd = check_fdf_file_string(argv[1]);
+		fd = main_check_fdf_file_string(argv[1]);
 		if (fd == 0)
 			return (0);
 		if (argc == 4)
 		{
-			width = ft_atoi(argv[2]);
-			height = ft_atoi(argv[3]);
+			if (main_check_fdf_window_param(argv[2], argv[3]))
+			{
+				width = ft_atoi(argv[2]);
+				height = ft_atoi(argv[3]);
+			}
 		}
-		fdf_start_process(fd, width, height);
+		return (fdf_start_process(fd, width, height));
 	}
 	return (0);
 }

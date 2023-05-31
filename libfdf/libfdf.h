@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/29 14:26:14 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:49:43 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -46,39 +46,34 @@ typedef struct	s_fdf_data
 {
 	void		*mlx;
 	void		*window;
+	int			width;
+	int			height;
+	int			fd;
+	size_t		max_x;
+	size_t		max_y;
 }				t_fdf_data;
 
-typedef struct			s_map_data
+typedef struct			s_point_data
 {
-	struct s_map_data	*map_start;
-	struct s_map_data	*right_node;
-	struct s_map_data	*left_node;
-	struct s_map_data	*up_node;
-	struct s_map_data	*bot_node;
-	long long int		node_axis;
-	long long int		node_ordinate;
-	long long int		node_altitude;
-	long long int		node_position_x;
-	long long int		node_position_y;
-	long long int		node_position_z;
-}						t_map_data;
+	int					map_x;
+	int					map_y;
+	int					map_z;
+	double				display_x;
+	double				display_y;
+	double				display_z;
+	struct s_point_data	*next_point;
+}						t_point_data;
 
-typedef struct		s_camera_data
+typedef struct	s_camera_data
 {
-	long long int	eye_x;
-	long long int	eye_y;
-	long long int	eye_z;
-	t_map_data		*lookat_point;
-	long long int	up_vector;
-	long long int	right_vector;
-}					t_camera_data;
+	int			eye_x;
+	int			eye_y;
+	double		eye_z;
+}				t_camera_data;
 
-int		fdf_start_process(int fd, int width, int height);
-void	fdf_open_window(int width, int height, int fd);
-int		fdf_close_window(void *param);
-int		fdf_esc_window(int keycode, void *param);
-int		fdf_error(void *param);
-void	*fdf_free_null(void *param, void *other_param);
-void	*fdf_error_free_null(void *param, void *other_param);
+int	fdf_start_process(int fd, int width, int height);
+int	fdf_open_window(t_fdf_data data, const t_point_data *starting_point);
+int	fdf_close_window(void *param);
+int	fdf_esc_window(int keycode, void *param);
 
 #endif

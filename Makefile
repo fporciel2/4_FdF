@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/21 09:47:25 by fporciel          #+#    #+#              #
-#    Updated: 2023/05/24 14:36:56 by fporciel         ###   ########.fr        #
+#    Updated: 2023/05/31 11:16:31 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # 
@@ -74,7 +74,7 @@ re: fclean all
 
 download-minilibx:
 	git clone git@github.com:42Paris/minilibx-linux.git
-	mv minilibx-linux/ mlx_linux/
+	mv minilibx-linux mlx_linux
 
 clean-minilibx: fclean
 	rm -rfd mlx_linux

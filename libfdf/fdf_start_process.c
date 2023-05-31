@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:58:28 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/29 15:46:34 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:56:50 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,38 +33,60 @@
 
 #include "./libfdf.h"
 
-static t_map_data	store_map_data(size_t count, char *line, t_map_data *node)
-{
-	char	**splitted_line;
+static void	start_fdf_clean(t_fdf_data data, t_point_data *starting_point)
 
-	splitted_line = ft_split(line, 32);
-	if (splitted_line == NULL)
-		fdf_error_free_null(line, node, splitted_line);
+static t_point_data	start_fdf_map(t_fdf_data data, t_point_data *first_point)
+
+static t_point_data	start_process_fdf_first_point(int fd, t_fdf_data data)
+{
+	t_point_data	*first_point;
+	char			*first_line;
+	char			**first_sequence;
+
+	first_line = get_next_line(fd);
+	if (first_line == NULL)
+		return (NULL);
+	first_sequence = ft_split(first_line, 32);
+	free(first_line);
+	if (first_sequence == NULL)
+		return (NULL);
+	first_point = (t_point_data *)malloc(sizeof(t_point_data));
+	if (first_point == NULL)
+		return (NULL);
+	return (start_fdf_map(data, first_point));
+}
+
+static t_point_data	start_process_fdf_map(int fd, t_fdf_data data)
+{
+	t_point_data	*starting_point;
+	t_point_data	*next_point;
+
+	starting_point = start_process_fdf_first_point(fd, data);
+	if (starting_point == NULL)
+		return (NULL);
+	next_point = NULL;
+	next_point = fdf_map(data, starting_point, next_point);
+	if (next_point == NULL)
+		return (NULL);
+	return (starting_point);
 }
 
 int	fdf_start_process(int fd, int width, int height)
 {
-	char				*line;
-	size_t				count;
-	static t_map_data	*node;
+	static t_fdf_data	data;
+	static t_point_data	*starting_point;
+	int					result;
 
-	count = 0;
-	line = (char *)malloc(sizeof(char));
-	if (line == NULL)
-		return (fdf_error(NULL));
-	line[0] = 0;
-	while (line != NULL)
+	data.width = width;
+	data.height = height;
+	data.fd = fd;
+	starting_point = start_process_fdf_map(fd, data);
+	if (starting_point == NULL)
 	{
-		line = fdf_free_null(line, NULL);
-		line = get_next_line(fd);
-		if (line != NULL)
-		{
-			count++;
-			node = store_map_data(count, line, node);
-		}
-		else
-			return (fdf_error(NULL));
+		perror("The map is not valid!");
+		return (0);
 	}
-	fdf_open_window(width, height, node);
-	return (0);
+	result = fdf_open_window(data, starting_point);
+	start_process_fdf_clean(starting_point, data);
+	return (result);
 }

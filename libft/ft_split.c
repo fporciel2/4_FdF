@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fporciel <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/02 16:20:26 by fporciel          #+#    #+#             */
-/*   Updated: 2023/02/06 13:58:43 by fporciel         ###   ########.fr       */
+/*   Created: 2023/05/30 09:05:07 by fporciel          #+#    #+#             */
+/*   Updated: 2023/05/31 11:19:43 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -31,95 +31,102 @@
 *- fporciel@student.42roma.it
 */
 
-#include "libft.h"
+#include "./libft.h"
 
-static char	**ft_freemem(char	**split, size_t	i)
+static char	**split_free_null(char ***phrase, size_t count)
 {
-	while (i > 0)
-	{
-		i--;
-		free(split[i]);
-	}
-	free(split);
-	return (NULL);
-}
+	size_t	other_count;
 
-static size_t	ft_splitlen(char const *s, char c)
-{
-	size_t	splitlen;
-	size_t	i;
-
-	splitlen = 0;
-	i = 0;
-	while (s[i] != 0)
+	other_count = 0;
+	while (other_count < count)
 	{
-		if (s[i] != c)
+		if (((*phrase)[other_count]) != NULL)
 		{
-			splitlen++;
-			while ((s[i] != c) && (s[i] != 0))
-				i++;
+			free(((*phrase)[other_count]));
+			((*phrase)[other_count]) = NULL;
 		}
-		else
-			i++;
+		other_count++;
 	}
-	return (splitlen);
+	if (((*phrase)[count]) != NULL)
+	{
+		free(((*phrase)[count]));
+		((*phrase)[count]) = NULL;
+	}
+	free(*phrase);
+	(*phrase) = NULL;
+	return (*phrase);
 }
 
-static char	*ft_splut(char *split, const char *s, size_t i, size_t sublen)
+static size_t	split_count(char *str, char delim, int param, size_t *start)
 {
-	int	j;
+	size_t	words;
+	ssize_t	letters;
 
-	j = 0;
-	while (sublen > 0)
+	words = 0;
+	letters = 0;
+	if (param == 0)
 	{
-		split[j] = s[i - sublen];
-		j++;
-		sublen--;
-	}
-	split[j] = 0;
-	return (split);
-}
-
-static char	**ft_splitt(char const *s, char c, char **split, size_t splitlen)
-{
-	size_t	sublen;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	sublen = 0;
-	j = 0;
-	while (j < splitlen)
-	{
-		while ((s[i] == c) && (s[i] != 0))
-			i++;
-		while ((s[i] != c) && (s[i] != 0))
+		while (str[letters] != 0)
 		{
-			sublen++;
-			i++;
+			while (str[letters] == delim)
+				letters++;
+			if ((str[letters] != delim) && (str[letters] != 0))
+				words++;
+			while ((str[letters] != delim) && (str[letters] != 0))
+				letters++;
 		}
-		split[j] = (char *)malloc(sizeof(char) * (sublen + 1));
-		if (split == NULL)
-			return (ft_freemem(split, i));
-		ft_splut(split[j], s, i, sublen);
-		sublen = 0;
-		j++;
+		return (words);
 	}
-	split[j] = NULL;
-	return (split);
+	while (str[(*start)] == delim)
+		(*start)++;
+	while ((str[(*start)]) && (str[(*start)] != delim) && (letters++ >= 0))
+		(*start)++;
+	return (letters);
 }
 
-char	**ft_split(char const *s, char c)
+static char	*split_copy_word(char *word, char *str, char delim, size_t *start)
 {
-	char	**split;
-	size_t	splitlen;
+	size_t	letters;
+	size_t	start_word;
+	size_t	count;
 
-	if (s == NULL)
+	letters = split_count(str, delim, 1, start);
+	word = (char *)malloc(sizeof(char) * (letters + 1));
+	if (word == NULL)
 		return (NULL);
-	splitlen = ft_splitlen(s, c);
-	split = (char **)malloc(sizeof(char *) * (splitlen + 1));
-	if (split == NULL)
+	start_word = ((*start) - letters);
+	count = 0;
+	while (count < letters)
+	{
+		word[count] = str[start_word + count];
+		count++;
+	}
+	word[count] = 0;
+	return (word);
+}
+
+char	**ft_split(const char *str, char delim)
+{
+	size_t	count;
+	size_t	count_words;
+	size_t	start;
+	char	**phrase;
+
+	count = 0;
+	start = 0;
+	if ((str == NULL) || ((*str) == 0))
 		return (NULL);
-	split = ft_splitt(s, c, split, splitlen);
-	return (split);
+	count_words = split_count(str, delim, 0, &start);
+	phrase = (char **)malloc(sizeof(char *) * (count_words + 1));
+	if (phrase == NULL)
+		return (NULL);
+	while (count < count_words)
+	{
+		phrase[count] = split_copy_word(phrase[count], str, delim, &start);
+		if (phrase[count] == NULL)
+			return (split_free_null(&phrase, count));
+		count++;
+	}
+	phrase[count] = NULL;
+	return (phrase);
 }
