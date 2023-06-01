@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:58:28 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/01 12:27:05 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/01 13:47:59 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,7 +33,7 @@
 
 #include "./libfdf.h"
 
-static void	*cleaner(char *line, t_point_data first_node, char **splitted_line)
+static void	*cleaner(char *line, t_point_data *start, char **splitted_line)
 {
 	size_t			count;
 	t_point_data	*swap;
@@ -47,32 +47,32 @@ static void	*cleaner(char *line, t_point_data first_node, char **splitted_line)
 			free(splitted_line[count++]);
 		free(splitted_line);
 	}
-	if (first_node != NULL)
+	if (start != NULL)
 	{
-		while (first_node != NULL)
+		while (start != NULL)
 		{
-			swap = first_node;
-			first_node = swap->next_point;
+			swap = start;
+			start = swap->next_point;
 			free(swap);
 		}
-		first_node = NULL;
+		start = NULL;
 	}
 	return (NULL);
 }
 
-static t_point_data	*fdf_node(t_point_data *start, char *point)
+static t_point_data	*fdf_node(t_point_data *start, char *ptr, t_fdf_data data)
 {
 	t_point_data	*next;
 
 	next = start;
-	if (start != NULL)
+	if (start == NULL)
 	{
 		start = (t_point_data *)malloc(sizeof(t_point_data));
 		if (start == NULL)
 			return (NULL);
 		start->map_x = data.max_x;
 		start->map_y = data.max_y;
-		start->map_z = ft_atoi(point);
+		start->map_z = ft_atoi(ptr);
 		start->next_point = NULL;
 		return (start);
 	}
@@ -83,7 +83,7 @@ static t_point_data	*fdf_node(t_point_data *start, char *point)
 		return (NULL);
 	next->map_x = data.max_x;
 	next->map_y = data.max_y;
-	next->map_z = ft_atoi(point);
+	next->map_z = ft_atoi(ptr);
 	next->next_point = NULL;
 	return (next);
 }
@@ -97,7 +97,7 @@ static t_point_data	*fdf_map(t_fdf_data data, t_point_data *start, char *line)
 	count = 0;
 	while (line[count] != 10)
 	{
-		if ((line[count] < 48) || (line[count] > 57))
+		if ((line[count] != 32) && ((line[count] < 48) || (line[count] > 57)))
 			return (NULL);
 		count++;
 	}
@@ -107,7 +107,7 @@ static t_point_data	*fdf_map(t_fdf_data data, t_point_data *start, char *line)
 	count = 0;
 	while (splitted_line[count] != NULL)
 	{
-		next = fdf_node(start, splitted_line[count]);
+		next = fdf_node(start, splitted_line[count], data);
 		if (next == NULL)
 			return (cleaner(NULL, start, splitted_line));
 		count++;
@@ -155,7 +155,7 @@ int	fdf_start_process(int fd, int width, int height)
 	data.height = height;
 	data.fd = fd;
 	first_node = fdf_start_parse(data, first_node);
-	if (first_point == NULL)
+	if (first_node == NULL)
 	{
 		perror("Failed to read the map.");
 		return (0);

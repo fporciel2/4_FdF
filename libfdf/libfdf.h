@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/01 10:24:40 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/01 12:52:51 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -73,6 +73,6 @@ typedef struct	s_camera_data
 }				t_camera_data;
 
 int	fdf_start_process(int fd, int width, int height);
-int	fdf_open_window(t_fdf_data data, const t_point_data *starting_point);
+int	fdf_open_window(t_fdf_data data, t_point_data *starting_point);
 
 #endif

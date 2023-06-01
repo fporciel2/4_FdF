@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 09:05:07 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/31 11:19:43 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/01 13:18:30 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -57,7 +57,7 @@ static char	**split_free_null(char ***phrase, size_t count)
 	return (*phrase);
 }
 
-static size_t	split_count(char *str, char delim, int param, size_t *start)
+static size_t	splitlen(const char *str, char delim, int param, size_t *start)
 {
 	size_t	words;
 	ssize_t	letters;
@@ -84,13 +84,13 @@ static size_t	split_count(char *str, char delim, int param, size_t *start)
 	return (letters);
 }
 
-static char	*split_copy_word(char *word, char *str, char delim, size_t *start)
+static char	*split_word(char *word, const char *str, char delim, size_t *start)
 {
 	size_t	letters;
 	size_t	start_word;
 	size_t	count;
 
-	letters = split_count(str, delim, 1, start);
+	letters = splitlen(str, delim, 1, start);
 	word = (char *)malloc(sizeof(char) * (letters + 1));
 	if (word == NULL)
 		return (NULL);
@@ -116,13 +116,13 @@ char	**ft_split(const char *str, char delim)
 	start = 0;
 	if ((str == NULL) || ((*str) == 0))
 		return (NULL);
-	count_words = split_count(str, delim, 0, &start);
+	count_words = splitlen(str, delim, 0, &start);
 	phrase = (char **)malloc(sizeof(char *) * (count_words + 1));
 	if (phrase == NULL)
 		return (NULL);
 	while (count < count_words)
 	{
-		phrase[count] = split_copy_word(phrase[count], str, delim, &start);
+		phrase[count] = split_word(phrase[count], str, delim, &start);
 		if (phrase[count] == NULL)
 			return (split_free_null(&phrase, count));
 		count++;

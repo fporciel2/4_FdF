@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:56:39 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/31 13:17:09 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/01 13:26:30 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -99,5 +99,6 @@ int	main(int argc, char *argv[])
 		}
 		return (fdf_start_process(fd, width, height));
 	}
+	perror("No filename or wrong arguments!");
 	return (0);
 }
