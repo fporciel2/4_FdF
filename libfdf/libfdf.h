@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:47:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/31 13:49:43 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/01 10:24:40 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -41,6 +41,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
+# include <errno.h>
 
 typedef struct	s_fdf_data
 {
@@ -49,8 +50,8 @@ typedef struct	s_fdf_data
 	int			width;
 	int			height;
 	int			fd;
-	size_t		max_x;
-	size_t		max_y;
+	int			max_x;
+	int			max_y;
 }				t_fdf_data;
 
 typedef struct			s_point_data
@@ -73,7 +74,5 @@ typedef struct	s_camera_data
 
 int	fdf_start_process(int fd, int width, int height);
 int	fdf_open_window(t_fdf_data data, const t_point_data *starting_point);
-int	fdf_close_window(void *param);
-int	fdf_esc_window(int keycode, void *param);
 
 #endif
