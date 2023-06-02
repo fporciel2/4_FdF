@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   fdf_init_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/21 12:56:39 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/02 14:27:39 by fporciel         ###   ########.fr       */
+/*   Created: 2023/06/02 14:30:30 by fporciel          #+#    #+#             */
+/*   Updated: 2023/06/02 15:56:33 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -31,75 +31,73 @@
 *- fporciel@student.42roma.it
 */
 
-#include "fdf.h"
+#include "./fdf.h"
 
-static int	main_check_fdf_window_param(char *width, char *height)
+static int	init_fdf_close_all(int fd)
 {
-	size_t	count;
+	int	control;
 
-	count = 0;
-	while (width[count])
-	{
-		if ((width[count] < 48) || (width[count] > 57))
-			return (0);
-		count++;
-	}
-	count = 0;
-	while (height[count])
-	{
-		if ((height[count] < 48) || (height[count] > 57))
-			return (0);
-		count++;
-	}
-	return (1);
+	control = close(fd);
+	return (0);
 }
 
-static int	main_check_fdf_file_string(char *argvone)
+static int	init_effectively_count(int fd, char swap, int num, ssize_t count)
 {
-	size_t	len;
-	int		fd;
+	char	buffer;
+	int		time;
 
-	len = ft_strlen(argvone);
-	if ((argvone[len - 1] != 102) || (argvone[len - 2] != 100)
-		|| (argvone[len - 3] != 102) || (argvone[len - 4] != 46))
+	time = 0;
+	while (count > 0)
 	{
-		perror("Invalid filename!");
-		return (0);
+		count = read(fd, &buffer, 1);
+		if (count < 0)
+			return (init_fdf_close_all(fd));
+		if ((time == 0) || ((buffer != 10) && (swap == 10)))
+			num++;
+		time++;
+		swap = buffer;
 	}
+	time = close(fd);
+	if (time < 0)
+		return (0);
+	return (num);
+}
+
+static int	init_count_fdf_lines(int fd)
+{
+	int		num_of_lines;
+	char	swap;
+	ssize_t	count;
+
+	num_of_lines = ft_printf("Counting number of lines...");
+	num_of_lines = 0;
+	swap = 0;
+	count = 1;
+	num_of_lines = init_effectively_count(fd, swap, num_of_lines, count);
+	if (num_of_lines == 0)
+		return (0);
+	return (num_of_lines);
+}
+
+int	fdf_init_file(int fd, int width, int height, char *argvone)
+{
+	static t_fdf_data	data;
+
+	data.garbage = ft_printf("Initializing file and data...");
+	data.num_of_lines = init_count_fdf_lines(fd);
+	if (data.num_of_lines == 0)
+		return (0);
 	fd = open(argvone, O_RDONLY);
-	if (fd != -1)
-		return (fd);
+	if (fd >= 0)
+	{
+		data.fd = fd;
+		data.width = width;
+		data.height = height;
+		return (fdf_start_process(data));
+	}
 	else
 	{
-		perror("Invalid filename!");
+		perror("An error occurred!");
 		return (0);
 	}
-}
-
-int	main(int argc, char *argv[])
-{
-	int	width;
-	int	height;
-	int	fd;
-
-	width = DEFAULT_WIDTH;
-	height = DEFAULT_HEIGHT;
-	fd = ft_printf("Checking parameters...");
-	if ((argc >= 2) && (argc != 3) && (argc < 5))
-	{
-		fd = main_check_fdf_file_string(argv[1]);
-		if (fd == 0)
-			return (0);
-		if (argc == 4)
-		{
-			if (main_check_fdf_window_param(argv[2], argv[3]))
-			{
-				width = ft_atoi(argv[2]);
-				height = ft_atoi(argv[3]);
-			}
-		}
-		return (fdf_init_file(fd, width, height, argv[1]));
-	}
-	perror("Invalid filename or arguments!");
-	return (0);
 }

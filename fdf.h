@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 12:45:55 by fporciel          #+#    #+#             */
-/*   Updated: 2023/05/24 14:41:52 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:30:16 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -46,5 +46,6 @@
 # endif
 
 int	main(int argc, char **argv);
+int	fdf_init_file(int fd, int width, int height, char *argvone);
 
 #endif

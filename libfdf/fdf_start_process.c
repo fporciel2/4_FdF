@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:58:28 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/01 13:47:59 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:01:19 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -131,7 +131,7 @@ static t_point_data	*fdf_start_parse(t_fdf_data data, t_point_data *first_node)
 	{
 		free(line);
 		line = get_next_line(data.fd);
-		if ((line == NULL) && ((errno == ENOMEM) || (errno == EIO)))
+		if ((line == NULL) && (count != data.num_of_lines))
 			return (cleaner(NULL, first_node, NULL));
 		if (line != NULL)
 		{
@@ -145,15 +145,13 @@ static t_point_data	*fdf_start_parse(t_fdf_data data, t_point_data *first_node)
 	return (first_node);
 }
 
-int	fdf_start_process(int fd, int width, int height)
+int	fdf_start_process(t_fdf_data data)
 {
 	static t_fdf_data	data;
 	static t_point_data	*first_node;
 	int					result;
 
-	data.width = width;
-	data.height = height;
-	data.fd = fd;
+	result = ft_printf("Starting the process...");
 	first_node = fdf_start_parse(data, first_node);
 	if (first_node == NULL)
 	{
