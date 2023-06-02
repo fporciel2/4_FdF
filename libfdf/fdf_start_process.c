@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:58:28 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/02 16:01:19 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/02 17:34:27 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -76,11 +76,12 @@ static t_point_data	*fdf_node(t_point_data *start, char *ptr, t_fdf_data data)
 		start->next_point = NULL;
 		return (start);
 	}
-	while (next != NULL)
+	while (next->next_point != NULL)
 		next = next->next_point;
-	next = (t_point_data *)malloc(sizeof(t_point_data));
-	if (next == NULL)
+	next->next_point = (t_point_data *)malloc(sizeof(t_point_data));
+	if (next->next_point == NULL)
 		return (NULL);
+	next = next->next_point;
 	next->map_x = data.max_x;
 	next->map_y = data.max_y;
 	next->map_z = ft_atoi(ptr);
@@ -95,7 +96,7 @@ static t_point_data	*fdf_map(t_fdf_data data, t_point_data *start, char *line)
 	size_t			count;
 
 	count = 0;
-	while (line[count] != 10)
+	while ((line[count] != 10) && (line[count] != 0))
 	{
 		if ((line[count] != 32) && ((line[count] < 48) || (line[count] > 57)))
 			return (NULL);
@@ -113,7 +114,7 @@ static t_point_data	*fdf_map(t_fdf_data data, t_point_data *start, char *line)
 		count++;
 		data.max_x = count;
 	}
-	splitted_line = cleaner(NULL, NULL, splitted_line);
+	cleaner(NULL, NULL, splitted_line);
 	return (start);
 }
 
@@ -147,11 +148,10 @@ static t_point_data	*fdf_start_parse(t_fdf_data data, t_point_data *first_node)
 
 int	fdf_start_process(t_fdf_data data)
 {
-	static t_fdf_data	data;
 	static t_point_data	*first_node;
 	int					result;
 
-	result = ft_printf("Starting the process...");
+	result = ft_printf("\nStarting the process...\n");
 	first_node = fdf_start_parse(data, first_node);
 	if (first_node == NULL)
 	{

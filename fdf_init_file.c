@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 14:30:30 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/02 15:56:33 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:06:46 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -38,6 +38,7 @@ static int	init_fdf_close_all(int fd)
 	int	control;
 
 	control = close(fd);
+	(void)control;
 	return (0);
 }
 
