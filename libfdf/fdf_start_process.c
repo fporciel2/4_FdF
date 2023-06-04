@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:58:28 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/04 12:42:32 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/04 13:11:13 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -63,7 +63,6 @@ static t_point_data	*fdf_node(t_point_data **start, char *ptr, t_fdf_data data)
 {
 	t_point_data	*next;
 
-	data.garbage = ft_printf("How many points are read?");
 	next = *start;
 	if (*start == NULL)
 	{
