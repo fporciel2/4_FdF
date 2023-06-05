@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:58:28 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/05 14:32:42 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:50:28 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -152,6 +152,6 @@ int	fdf_start_process(t_fdf_data data)
 		perror("\nFailed to read the map.\n");
 		return (0);
 	}
-	result = fdf_open_window(data, first_node);
+	result = fdf_open_window(&data, &first_node);
 	return (result);
 }

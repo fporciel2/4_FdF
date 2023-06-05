@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 09:35:14 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/05 14:25:40 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/05 16:53:44 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -33,17 +33,39 @@
 
 #include "./libfdf.h"
 
-int	fdf_open_window(t_fdf_data data, t_point_data *first_node)
+static int	fdf_open_clean(t_point_data ***first_node, int param)
 {
 	t_point_data	*swap;
 
-	(void)data;
-	while (first_node != NULL)
+	while ((**first_node) != NULL)
 	{
-		swap = first_node;
-		data.garbage = ft_printf("%d %d %d \n", swap->map_x, swap->map_y, swap->map_z);
-		first_node = swap->next_point;
+		swap = **first_node;
+		**first_node = swap->next_point;
 		free(swap);
+		if (**first_node == NULL)
+			*first_node = NULL;
 	}
+	if (param == 1)
+		perror("Sorry :( an error occurred!");
 	return (0);
+}
+
+int	fdf_open_connection(t_fdf_data *dt, t_point_data **first_node)
+{
+	(*dt).img_width = (*dt).width / 2;
+	(*dt).img_height = (*dt).height / 2;
+	(*dt).mlx = mlx_init();
+	if ((*dt).mlx == NULL)
+		return (fdf_open_clean(&first_node, 1));
+	(*dt).win = mlx_new_window((*dt).mlx, (*dt).width, (*dt).height, "FdF");
+	if ((*dt).win == NULL)
+		return (fdf_open_clean(&first_node, 1));
+	(*dt).img = mlx_new_image((*dt).mlx, (*dt).img_width, (*dt).img_height);
+	if ((*dt).img == NULL)
+		return (fdf_open_clean(&first_node, 1));
+	(*dt).garbage = fdf_open_event_managing(dt, *first_node);
+	if ((*dt).garbage == 0)
+		return (fdf_open_clean(&first_node, 1));
+	mlx_loop(data.mlx);
+	return (fdf_open_clean(&first_node, 0));
 }
