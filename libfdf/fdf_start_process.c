@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 08:58:28 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/04 13:11:13 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/05 14:32:42 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -69,7 +69,7 @@ static t_point_data	*fdf_node(t_point_data **start, char *ptr, t_fdf_data data)
 		*start = (t_point_data *)malloc(sizeof(t_point_data));
 		if (*start == NULL)
 			return (NULL);
-		(*start)->map_x = data.max_x;
+		(*start)->map_x = data.max_x + 1;
 		(*start)->map_y = data.max_y;
 		(*start)->map_z = ft_atoi(ptr);
 		(*start)->next_point = NULL;
@@ -81,7 +81,7 @@ static t_point_data	*fdf_node(t_point_data **start, char *ptr, t_fdf_data data)
 	if (next->next_point == NULL)
 		return (NULL);
 	next = next->next_point;
-	next->map_x = data.max_x;
+	next->map_x = data.max_x + 1;
 	next->map_y = data.max_y;
 	next->map_z = ft_atoi(ptr);
 	next->next_point = NULL;

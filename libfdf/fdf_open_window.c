@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 09:35:14 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/04 13:03:22 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/05 14:25:40 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -41,6 +41,7 @@ int	fdf_open_window(t_fdf_data data, t_point_data *first_node)
 	while (first_node != NULL)
 	{
 		swap = first_node;
+		data.garbage = ft_printf("%d %d %d \n", swap->map_x, swap->map_y, swap->map_z);
 		first_node = swap->next_point;
 		free(swap);
 	}
