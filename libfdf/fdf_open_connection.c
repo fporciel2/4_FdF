@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_open_window.c                                  :+:      :+:    :+:   */
+/*   fdf_open_connection.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 09:35:14 by fporciel          #+#    #+#             */
-/*   Updated: 2023/06/05 16:53:44 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/06/19 09:49:02 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /* 
@@ -50,10 +50,16 @@ static int	fdf_open_clean(t_point_data ***first_node, int param)
 	return (0);
 }
 
+static int	fdf_open_event_managing(t_fdf_data *dt, t_point_data *first_node)
+{
+}
+
+static int	fdf_open_process_image(t_fdf_data *dt, t_point_data *first_node)
+{
+}
+
 int	fdf_open_connection(t_fdf_data *dt, t_point_data **first_node)
 {
-	(*dt).img_width = (*dt).width / 2;
-	(*dt).img_height = (*dt).height / 2;
 	(*dt).mlx = mlx_init();
 	if ((*dt).mlx == NULL)
 		return (fdf_open_clean(&first_node, 1));
@@ -62,6 +68,9 @@ int	fdf_open_connection(t_fdf_data *dt, t_point_data **first_node)
 		return (fdf_open_clean(&first_node, 1));
 	(*dt).img = mlx_new_image((*dt).mlx, (*dt).img_width, (*dt).img_height);
 	if ((*dt).img == NULL)
+		return (fdf_open_clean(&first_node, 1));
+	(*dt).garbage = fdf_open_process_image(dt, *first_node);
+	if ((*dt).garbage == 0)
 		return (fdf_open_clean(&first_node, 1));
 	(*dt).garbage = fdf_open_event_managing(dt, *first_node);
 	if ((*dt).garbage == 0)
