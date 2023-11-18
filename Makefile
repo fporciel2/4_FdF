@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/18 13:48:20 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/18 14:03:40 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -72,9 +72,9 @@ bonus: $(BNAME)
 $(BNAME): $(BLIBS)
 	$(CC) $(CFLAGS) $(LBFDF) $(LDLIBS) $(LDFLAGS) -o $(NAME)
 
-$(LIBS): ft printf mlx $(LFDF)
+$(LIBS): $(LFDF)
 
-$(BLIBS): ft printf mlx $(LBFDF)
+$(BLIBS): $(LBFDF)
 
 $(LFDF): $(OBJS)
 	ar rcs $(LFDF) $(OBJS) $(HEADERS)
@@ -82,33 +82,44 @@ $(LFDF): $(OBJS)
 $(LBFDF): $(BOBJS)
 	ar rcs $(LBFDF) $(BOBJS) $(BHEADERS)
 
+$(OBJS): ft printf mlx $(SRCS) $(HEADERS)
+	$(CC) $(CFLAGS) $(SRCS)
+
+$(BOBJS): ft printf mlx $(BSRCS) $(BHEADERS)
+	$(CC) $(CFLAGS) $(BSRCS)
+
 mlx: $(LMLX)
 
-$(LMLX): $(DMLX)
-	cd $(DMLX) && ./configure && cd ..
+$(LMLX): dmlx
+	if [ ! -e $(LMLX) ]; \
+		then cd $(DMLX) && ./configure && cd ..; fi
 
 printf: $(LPRINTF)
 
 $(LPRINTF): dprintf ft
-	cd $(DPRINTF) && make && cd ..
+	if [ ! -e $(LPRINTF) ]; \
+		then cd $(DPRINTF) && make && cd ..; fi
 
 ft: $(LFT)
 
 $(LFT): dft
-	cd $(DFT) && make bonus && cd ..
+	if [ ! -e $(LFT) ]; \
+		then cd $(DFT) && make bonus && cd ..; fi
 
 dprintf: $(DPRINTF)
 
 $(DPRINTF):
-	git clone git@github.com:fporciel2/2_ft_printf.git
+	if [ ! -e $(DPRINTF) ]; \
+		then git clone git@github.com:fporciel2/2_ft_printf.git; fi
 
 dft: $(DFT)
 
 $(DFT):
-	git clone git@github.com:fporciel2/1_libft.git
+	if [ ! -e $(DFT) ]; \
+		then git clone git@github.com:fporciel2/1_libft.git; fi
 
-$(OBJS): $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) $(SRCS)
+dmlx: $(DMLX)
 
-$(BOBJS): $(BSRCS) $(BHEADERS)
-	$(CC) $(CFLAGS) $(BSRCS)
+$(DMLX):
+	if [ ! -e $(DMLX) ]; \
+		then git clone git@github.com:42Paris/minilibx-linux.git; fi
