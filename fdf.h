@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/18 16:02:37 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/18 16:10:16 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -50,5 +50,10 @@
 
 # define WINX	1920
 # define WINY	1080
+
+typedef struct s_map
+{
+	int	**map;
+}		t_map;
 
 #endif
