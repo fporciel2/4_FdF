@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/18 14:13:36 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/18 14:38:14 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -29,7 +29,7 @@
 #
 
 .PHONY: all bonus clean fclean dfclean re rebonus dmlx mlx dft ft dprintf \
-	printf norm memcheck helgrind
+	printf norm memcheck bmemcheck helgrind bhelgrind
 .DEFAULT_GOAL: all
 NAME := fdf
 BNAME := bfdf
@@ -142,3 +142,35 @@ dfclean: clean fclean
 	rm -rfd $(DFT)
 	rm -rfd $(DPRINTF)
 	rm -rfd $(DMLX)
+
+autogit: dfclean
+	git status
+	git add *
+	git status
+	echo "\nPlease, enter your commit message:"
+	read commit_message; git commit -m "$$commit_message"
+	git status
+	git push
+
+memcheck:
+	echo "\nPlease, enter the name of the map:"
+	read map_name; \
+		valgrind --leak-check=full --show-leak-kinds=all \
+		--track-origins=yes --show-error-list=yes -s -v ./fdf $$map_name
+
+bmemcheck:
+	echo "\nPlease, enter the name of the map:"
+	read map_name; \
+		valgrind --leak-check=full --show-leak-kinds=all \
+		--track-origins=yes --show-error-list=yes -s -v ./bfdf $$map_name
+
+helgrind:
+	echo "\nPlease, enter the name of the map:"
+	read map_name; \
+		valgrind --tool=helgrind --history-level=full ./fdf $$map_name
+
+bhelgrind:
+	echo "\nPlease, enter the name of the map:"
+	read map_name; \
+		valgrind --tool=helgrind --history-level=full ./bfdf $$map_name
+
