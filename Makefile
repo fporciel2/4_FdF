@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/18 14:03:40 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/18 14:13:36 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -123,3 +123,22 @@ dmlx: $(DMLX)
 $(DMLX):
 	if [ ! -e $(DMLX) ]; \
 		then git clone git@github.com:42Paris/minilibx-linux.git; fi
+
+clean:
+	rm -f $(OBJS)
+	rm -f $(BOBJS)
+	rm -f $(DFT)/$(wildcard *.o)
+	rm -f $(DPRINTF)/$(wildcard *.o)
+	rm -f $(DMLX)/$(wildcard *.o)
+
+fclean: clean
+	rm -f $(NAME) $(BNAME) $(LIBS) $(BLIBS)
+
+re: clean fclean all
+
+rebonus: clean fclean bonus
+
+dfclean: clean fclean
+	rm -rfd $(DFT)
+	rm -rfd $(DPRINTF)
+	rm -rfd $(DMLX)
