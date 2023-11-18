@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/14 10:06:48 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/18 13:48:20 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -38,7 +38,7 @@ DMLX := $(DIR)/minilibx-linux
 DFT := $(DIR)/1_libft
 DPRINTF := $(DIR)/2_ft_printf
 DINCLUDE := $(DIR) $(DMLX) $(FT) $(DPRINTF)
-FDFH := $(DIR)/$(filter-out %bonus.c, $(wildcard *.h))
+FDFH := $(DIR)/$(filter-out %bonus.h, $(wildcard *.h))
 BFDFH := $(DIR)/$(wildcard *bonus.h)
 MLXH := $(DMLX)/$(wildcard *.h)
 FTH := $(DFT)/$(wildcard *.h)
@@ -72,3 +72,43 @@ bonus: $(BNAME)
 $(BNAME): $(BLIBS)
 	$(CC) $(CFLAGS) $(LBFDF) $(LDLIBS) $(LDFLAGS) -o $(NAME)
 
+$(LIBS): ft printf mlx $(LFDF)
+
+$(BLIBS): ft printf mlx $(LBFDF)
+
+$(LFDF): $(OBJS)
+	ar rcs $(LFDF) $(OBJS) $(HEADERS)
+
+$(LBFDF): $(BOBJS)
+	ar rcs $(LBFDF) $(BOBJS) $(BHEADERS)
+
+mlx: $(LMLX)
+
+$(LMLX): $(DMLX)
+	cd $(DMLX) && ./configure && cd ..
+
+printf: $(LPRINTF)
+
+$(LPRINTF): dprintf ft
+	cd $(DPRINTF) && make && cd ..
+
+ft: $(LFT)
+
+$(LFT): dft
+	cd $(DFT) && make bonus && cd ..
+
+dprintf: $(DPRINTF)
+
+$(DPRINTF):
+	git clone git@github.com:fporciel2/2_ft_printf.git
+
+dft: $(DFT)
+
+$(DFT):
+	git clone git@github.com:fporciel2/1_libft.git
+
+$(OBJS): $(SRCS) $(HEADERS)
+	$(CC) $(CFLAGS) $(SRCS)
+
+$(BOBJS): $(BSRCS) $(BHEADERS)
+	$(CC) $(CFLAGS) $(BSRCS)
