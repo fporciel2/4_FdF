@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   fdf_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 11:41:40 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/19 10:44:10 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/19 11:01:49 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -29,59 +29,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef FDF_H
-# define FDF_H
+#include "fdf.h"
 
-# include "./1_libft/libft.h"
-# include "./2_ft_printf/ft_printf.h"
-# include "./minilibx-linux/mlx.h"
-# include "./minilibx-linux/mlx_int.h"
-# include <stdbool.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <errno.h>
-# include <string.h>
-# include <math.h>
-# include <X11/X.h>
-# include <X11/keysym.h>
-
-# define WINX	1920
-# define WINY	1080
-
-# define IMGX	1920
-# define IMGY	1080
-
-typedef struct s_fdf
+int	fdf_invalid_argument_error(void)
 {
-	void	*dsp;
-	void	*win;
-	void	*img;
-	char	*data;
-	char	*line;
-	char	**spline;
-	int		**map;
-	int		bits;
-	int		llen;
-	int		endian;
-	int		fd;
-	int		width;
-	int		height;
-}			t_fdf;
+	return (perror(strerror(EINVAL)), 0);
+}
 
-int	fdf_invalid_argument_error(void);
-int	fdf_nonexistent_file_error(void);
-int	fdf_generic_error(t_fdf *fdf);
-int	fdf_get_height_and_width(t_fdf *fdf, char *argvi);
-int	**fdf_prepare_map(int height, int width);
-int	fdf_put_pixel(void);
-int	fdf_memory_cleaner(t_fdf *fdf);
-int	fdf_draw_line(t_fdf *fdf);
-int	fdf_draw_lines(t_fdf *fdf);
-int	fdf_graphic_management(t_fdf *fdf);
-int	fdf_deal_key(t_fdf *fdf);
-int	fdf_normal_exit(t_fdf *fdf);
+int	fdf_nonexistent_file_error(void)
+{
+	return (perror(strerror(errno)), exit(EXIT_FAILURE), 0);
+}
 
-#endif
+int	fdf_generic_error(t_fdf *fdf)
+{
+	int	ret;
+
+	if (fdf == NULL)
+		return (perror(strerror(errno)), exit(EXIT_FAILURE), 0);
+	ret = fdf_memory_cleaner(fdf);
+	return (perror(strerror(errno)), exit(EXIT_FAILURE), ret);
+}

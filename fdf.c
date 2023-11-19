@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 11:41:40 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/19 10:18:37 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/19 11:42:06 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -29,59 +29,56 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef FDF_H
-# define FDF_H
+#include "fdf.h"
 
-# include "./1_libft/libft.h"
-# include "./2_ft_printf/ft_printf.h"
-# include "./minilibx-linux/mlx.h"
-# include "./minilibx-linux/mlx_int.h"
-# include <stdbool.h>
-# include <sys/stat.h>
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <stdio.h>
-# include <errno.h>
-# include <string.h>
-# include <math.h>
-# include <X11/X.h>
-# include <X11/keysym.h>
-
-# define WINX	1920
-# define WINY	1080
-
-# define IMGX	1920
-# define IMGY	1080
-
-typedef struct s_fdf
+static int	fdf_check_filename(char *name)
 {
-	void	*dsp;
-	void	*win;
-	void	*img;
-	char	*data;
-	char	*line;
-	char	**spline;
-	int		**map;
-	int		bits;
-	int		llen;
-	int		endian;
+	int		namelen;
 	int		fd;
-	int		width;
-	int		height;
-}			t_fdf;
 
-int	fdf_invalid_argument_error(void);
-int	fdf_nonexistent_file_error(void);
-int	fdf_generic_error(t_fdf *fdf);
-int	fdf_get_height_and_width(t_fdf *fdf, char *argvi);
-int	**fdf_prepare_map(int height, int width);
-int	fdf_put_pixel(void);
-int	fdf_memory_cleaner(t_fdf *fdf);
-int	fdf_draw_line(t_fdf *fdf);
-int	fdf_draw_lines(t_fdf *fdf);
-int	fdf_graphic_management(t_fdf *fdf);
-int	fdf_deal_key(t_fdf *fdf);
-int	fdf_normal_exit(t_fdf *fdf);
+	namelen = ft_strlen(name);
+	if ((name[namelen - 1] != 102) || (name[namelen - 2] != 100)
+		|| (name[namelen - 3] != 102) || (name[namelen - 4] != 46))
+		return (0);
+	fd = open(name, O_RDONLY);
+	if (fd < 0)
+	{
+		if (close(fd) < 0)
+			return (fdf_nonexistent_file_error(void));
+		return (0);
+	}
+	if (close(fd) < 0)
+		return (fdf_generic_error(NULL));
+	return (1);
+}
 
-#endif
+int	main(int argc, char **argv)
+{
+	static t_fdf	fdf;
+	int				i;
+	int				j;
+
+	if (argc != 2)
+		return (fdf_invalid_argument_error());
+	if (!fdf_check_filename(argv[1]))
+		return (fdf_nonexistent_file_error());
+	fdf.width = 0;
+	fdf.height = fdf_get_height_and_width(&fdf, argv[1]);
+	fdf.map = fdf_prepare_map(fdf.height, fdf.width);
+	ft_printf("Height: %d\n", fdf.height);
+	ft_printf("Width: %d\n", fdf.width);
+	ft_printf("\n\n");
+	i = 0;
+	while (((fdf.map)[i]) != NULL)
+	{
+		j = 0;
+		while (j < fdf.width)
+		{
+			ft_printf("%d ", ((fdf.map)[i][j]));
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+	}
+	return (0);
+}
