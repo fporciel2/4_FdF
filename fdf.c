@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 10:18:37 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 14:25:45 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/19 15:14:54 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -44,7 +44,7 @@ static int	fdf_check_filename(char *name)
 	if (fd < 0)
 	{
 		if (close(fd) < 0)
-			return (fdf_nonexistent_file_error(void));
+			return (fdf_nonexistent_file_error());
 		return (0);
 	}
 	if (close(fd) < 0)

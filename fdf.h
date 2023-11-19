@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 14:26:32 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/19 15:14:38 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -86,6 +86,6 @@ int		fdf_graphic_management(t_fdf *fdf);
 int		fdf_deal_key(t_fdf *fdf);
 int		fdf_normal_exit(t_fdf *fdf);
 char	**fdf_free_split(char **split);
-int		fdf_free_map(t_fdf *fdf, int param);
+int		fdf_free_map(t_fdf *fdf);
 
 #endif

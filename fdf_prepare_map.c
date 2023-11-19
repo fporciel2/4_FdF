@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:52:15 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 14:49:46 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/19 15:17:17 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -51,7 +51,7 @@ static void	fdf_continue_fill_map(t_fdf *fdf, ssize_t j)
 {
 	ssize_t	i;
 
-	fdf->spline = ft_split(fdf->line);
+	fdf->spline = ft_split(fdf->line, 32 );
 	if (fdf->spline == NULL)
 		fdf_generic_error(fdf);
 	i = 0;
@@ -71,7 +71,7 @@ static void	fdf_fill_map(t_fdf *fdf, char *name)
 	fdf->stop = 1;
 	fdf->fd = open(name, O_RDONLY);
 	if (fdf->fd < 0)
-		return (fdf_generic_error(fdf));
+		fdf_generic_error(fdf);
 	while (fdf->stop != 0)
 	{
 		errno = 0;
