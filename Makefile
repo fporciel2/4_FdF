@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/19 14:58:05 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/19 15:12:10 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -38,11 +38,11 @@ DMLX := $(DIR)/minilibx-linux
 DFT := $(DIR)/1_libft
 DPRINTF := $(DIR)/2_ft_printf
 DINCLUDE := $(DIR) $(DMLX) $(FT) $(DPRINTF)
-FDFH := $(DIR)/$(filter-out %bonus.h, $(wildcard *.h))
-BFDFH := $(DIR)/$(wildcard *bonus.h)
-MLXH := $(DMLX)/$(wildcard *.h)
-FTH := $(DFT)/$(wildcard *.h)
-PRINTFH := $(DPRINTF)/$(wildcard *.h)
+FDFH := $(DIR)/fdf.h
+BFDFH := $(DIR)/fdf_bonus.h
+MLXH := $(DMLX)/mlx.h $(DMLX)/mlx_int.h
+FTH := $(DFT)/libft.h
+PRINTFH := $(DPRINTF)/ft_printf.h
 HEADERS := $(FDFH) $(MLXH) $(FTH) $(PRINTFH)
 BHEADERS := $(BFDFH) $(MLXH) $(FTH) $(PRINTFH)
 LFDF := $(DIR)/libfdf.a
@@ -50,8 +50,8 @@ LBFDF := $(DIR)/libfdfbonus.a
 LMLX := $(DMLX)/libmlx.a $(DMLX)/libmlx_Linux.a
 LFT := $(DFT)/libft.a
 LPRINTF := $(DPRINTF)/libftprintf.a
-LIBS := $(LFT) $(LPRINTF) $(LMLX) $(LFDF)
-BLIBS := $(LFT) $(LPRINTF) $(MLX) $(LBFDF)
+LIBS := $(LFT) $(LPRINTF) $(LMLX)
+BLIBS := $(LFT) $(LPRINTF) $(MLX)
 SRCS := $(filter-out %bonus.c, $(wildcard fdf*.c))
 BSRCS := $(wildcard fdf*bonus.c)
 OBJS := $(patsubst %.c, %.o, $(SRCS))
@@ -64,17 +64,13 @@ LDFLAGS := -lmlx -lft -lftprintf -lXext -lX11 -lm
 
 all: $(NAME)
 
-$(NAME): $(LIBS)
+$(NAME): $(LFDF)
 	$(CC) $(CFLAGS) $(LFDF) $(LDLIBS) $(LDFLAGS) -o $@
 
 bonus: $(BNAME)
 
-$(BNAME): $(BLIBS)
+$(BNAME): $(LBFDF)
 	$(CC) $(CFLAGS) $(LBFDF) $(LDLIBS) $(LDFLAGS) -o $@
-
-$(LIBS): $(LFDF)
-
-$(BLIBS): $(LBFDF)
 
 $(LFDF): $(OBJS)
 	ar rcs $@ $(OBJS) $(HEADERS)
