@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 13:32:55 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/19 14:26:32 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -70,19 +70,22 @@ typedef struct s_fdf
 	int		width;
 	int		height;
 	int		stop;
+	ssize_t	imap;
 }			t_fdf;
 
-int	fdf_invalid_argument_error(void);
-int	fdf_nonexistent_file_error(void);
-int	fdf_generic_error(t_fdf *fdf);
-int	fdf_get_height_and_width(t_fdf *fdf, char *argvi);
-int	**fdf_prepare_map(int height, int width);
-int	fdf_put_pixel(void);
-int	fdf_memory_cleaner(t_fdf *fdf);
-int	fdf_draw_line(t_fdf *fdf);
-int	fdf_draw_lines(t_fdf *fdf);
-int	fdf_graphic_management(t_fdf *fdf);
-int	fdf_deal_key(t_fdf *fdf);
-int	fdf_normal_exit(t_fdf *fdf);
+int		fdf_invalid_argument_error(void);
+int		fdf_nonexistent_file_error(void);
+int		fdf_generic_error(t_fdf *fdf);
+int		fdf_get_height_and_width(t_fdf *fdf, char *argvi);
+int		**fdf_prepare_map(t_fdf *fdf, char *name);
+int		fdf_put_pixel(void);
+int		fdf_memory_cleaner(t_fdf *fdf);
+int		fdf_draw_line(t_fdf *fdf);
+int		fdf_draw_lines(t_fdf *fdf);
+int		fdf_graphic_management(t_fdf *fdf);
+int		fdf_deal_key(t_fdf *fdf);
+int		fdf_normal_exit(t_fdf *fdf);
+char	**fdf_free_split(char **split);
+int		fdf_free_map(t_fdf *fdf, int param);
 
 #endif

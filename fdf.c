@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 10:18:37 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 11:42:06 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/19 14:25:45 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -64,7 +64,7 @@ int	main(int argc, char **argv)
 		return (fdf_nonexistent_file_error());
 	fdf.width = 0;
 	fdf.height = fdf_get_height_and_width(&fdf, argv[1]);
-	fdf.map = fdf_prepare_map(fdf.height, fdf.width);
+	fdf.map = fdf_prepare_map(&fdf, argv[1]);
 	ft_printf("Height: %d\n", fdf.height);
 	ft_printf("Width: %d\n", fdf.width);
 	ft_printf("\n\n");

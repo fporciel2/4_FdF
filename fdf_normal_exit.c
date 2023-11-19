@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 11:04:31 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 11:25:02 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/19 14:20:15 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,9 +31,32 @@
 
 #include "fdf.h"
 
+static char	*fdf_free_string(char *str)
+{
+	free(str);
+	return (NULL);
+}
+
+char	**fdf_free_split(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i] != NULL)
+	{
+		split[i] = fdf_free_string(split[i]);
+		i++;
+	}
+	free(split);
+	return (NULL);
+}
+
 static int	fdf_clean_all(t_fdf *fdf)
 {
-	(void)fdf;
+	if (fdf->line != NULL)
+		fdf->line = fdf_free_string(fdf->line);
+	if (fdf->spline != NULL)
+		fdf->spline = fdf_free_split(fdf->spline);
 	return (0);
 }
 
@@ -55,6 +78,7 @@ int	fdf_normal_exit(t_fdf *fdf)
 {
 	int	stat;
 
+	stat = fdf_free_map(fdf);
 	stat = fdf_memory_cleaner(fdf);
 	return (exit(EXIT_SUCCESS), stat);
 }

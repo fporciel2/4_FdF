@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_get_height_and_width.c                         :+:      :+:    :+:   */
+/*   fdf_prepare_map.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 11:42:52 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 14:34:09 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/19 13:52:15 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/19 14:49:46 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,20 +31,45 @@
 
 #include "fdf.h"
 
-static void	fdf_get_width(t_fdf *fdf)
+int	fdf_free_map(t_fdf *fdf)
 {
-	int	width;
+	ssize_t	imap;
 
-	width = ft_strlen(fdf->line);
-	if (width > fdf->width)
-		fdf->width = width;
+	imap = fdf->width;
+	while (imap != fdf->imap)
+	{
+		free(((fdf->map)[imap]));
+		((fdf->map)[imap]) = NULL;
+		imap--;
+	}
+	free(fdf->map);
+	fdf->map = NULL;
+	return (0);
 }
 
-int	fdf_get_height_and_width(t_fdf *fdf, char *argvi)
+static void	fdf_continue_fill_map(t_fdf *fdf, ssize_t j)
 {
-	fdf->height = 0;
+	ssize_t	i;
+
+	fdf->spline = ft_split(fdf->line);
+	if (fdf->spline == NULL)
+		fdf_generic_error(fdf);
+	i = 0;
+	while (((fdf->spline)[i]) != NULL)
+	{
+		((fdf->map)[j][i]) = ft_atoi(((fdf->spline)[i]));
+		i++;
+	}
+	fdf->spline = fdf_free_split(fdf->spline);
+}
+
+static void	fdf_fill_map(t_fdf *fdf, char *name)
+{
+	ssize_t	j;
+
+	j = 0;
 	fdf->stop = 1;
-	fdf->fd = open(argvi, O_RDONLY);
+	fdf->fd = open(name, O_RDONLY);
 	if (fdf->fd < 0)
 		return (fdf_generic_error(fdf));
 	while (fdf->stop != 0)
@@ -55,14 +80,31 @@ int	fdf_get_height_and_width(t_fdf *fdf, char *argvi)
 				|| (errno == EAGAIN) || (errno == EWOULDBLOCK)
 				|| (errno == EBADF) || (errno == EFAULT) || (errno == EINTR)
 				|| (errno == EINVAL) || (errno == EIO)))
-			return (fdf_generic_error(fdf));
+			fdf_generic_error(fdf);
 		if (fdf->line == NULL)
 			fdf->stop = 0;
-		(fdf->height)++;
-		fdf_get_width(fdf);
+		fdf_continue_fill_map(fdf, j);
 		free(fdf->line);
+		j++;
 	}
 	if (close(fdf->fd) < 0)
-		return (fdf_generic_error(fdf));
-	return (fdf->height);
+		fdf_generic_error(fdf);
+}
+
+int	**fdf_prepare_map(t_fdf *fdf, char *name)
+{
+	fdf->map = (int **)malloc(sizeof(int *) * (fdf->height + 1));
+	if (fdf->map == NULL)
+		return (&(&fdf_generic_error(fdf)));
+	((fdf->map)[fdf->height]) = NULL;
+	fdf->imap = fdf->height;
+	while (fdf->imap >= 0)
+	{
+		((fdf->map)[fdf->imap]) = (int *)malloc(sizeof(int) * (fdf->width + 1));
+		if (((fdf->map)[fdf->imap]) == NULL)
+			return (&(&fdf_generic_error(fdf)));
+		(fdf->imap)--;
+	}
+	fdf_fill_map(fdf, name);
+	return (fdf->map);
 }
