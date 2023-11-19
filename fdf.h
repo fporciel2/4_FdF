@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 11:41:40 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/19 13:32:55 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -69,6 +69,7 @@ typedef struct s_fdf
 	int		fd;
 	int		width;
 	int		height;
+	int		stop;
 }			t_fdf;
 
 int	fdf_invalid_argument_error(void);

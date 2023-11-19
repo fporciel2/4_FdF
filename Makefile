@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/18 16:05:56 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/19 13:09:42 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -127,8 +127,10 @@ $(DMLX):
 clean:
 	rm -f $(OBJS)
 	rm -f $(BOBJS)
-	rm -f $(DFT)/$(wildcard *.o)
-	rm -f $(DPRINTF)/$(wildcard *.o)
+	if [ -e $(DFT) ]; \
+		then cd $(DFT) && make clean && cd ..; fi
+	if [ -e $(DPRINTF) ]; \
+		then cd $(DPRINTF) && make clean && cd ..; fi
 
 fclean: clean
 	rm -f $(NAME) $(BNAME) $(LIBS) $(BLIBS)

@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 11:42:52 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 11:48:25 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/19 13:36:09 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,9 +31,38 @@
 
 #include "fdf.h"
 
+static void	fdf_get_width(t_fdf *fdf)
+{
+	int	width;
+
+	width = ft_strlen(fdf->line);
+	if (width > fdf->width)
+		fdf->width = width;
+}
+
 int	fdf_get_height_and_width(t_fdf *fdf, char *argvi)
 {
-	int	height;
-
-	height = 0;
+	fdf->height = 0;
+	fdf->stop = 1;
+	fdf->fd = open(argvi, O_RDONLY);
+	if (fdf->fd < 0)
+		return (fdf_generic_error(fdf));
+	while (stop != 0)
+	{
+		errno = 0;
+		fdf->line = get_next_line(fdf->fd);
+		if ((line == NULL) && ((errno == ENOMEM)
+				|| (errno == EAGAIN) || (errno == EWOULDBLOCK)
+				|| (errno == EBADF) || (errno == EFAULT) || (errno == EINTR)
+				|| (errno == EINVAL) || (errno == EIO)))
+			return (fdf_generic_error(fdf));
+		if (line == NULL)
+			fdf->stop = 0;
+		(fdf->height)++;
+		fdf_get_width(fdf);
+		free(fdf->line);
+	}
+	if (close(fdf->fd) < 0)
+		return (fdf_generic_error(fdf));
+	return (fdf->height);
 }
