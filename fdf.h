@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/18 16:10:16 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/19 10:17:16 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -51,9 +51,33 @@
 # define WINX	1920
 # define WINY	1080
 
-typedef struct s_map
+# define IMGX	1920
+# define IMGY	1080
+
+typedef struct s_fdf
 {
-	int	**map;
-}		t_map;
+	void	*dsp;
+	void	*win;
+	void	*img;
+	char	*data;
+	int		**map;
+	int		bits;
+	int		llen;
+	int		endian;
+}			t_fdf;
+
+int	fdf_invalid_argument_error(t_fdf *fdf);
+int	fdf_nonexistent_file_error(t_fdf *fdf);
+int	fdf_generic_error(t_fdf *fdf);
+int	fdf_get_height(void);
+int	fdf_get_width(void);
+int	fdf_prepare_map(int height, int width);
+int	fdf_put_pixel(void);
+int	fdf_memory_cleaner(t_fdf *fdf);
+int	fdf_draw_line(t_fdf *fdf);
+int	fdf_draw_lines(t_fdf *fdf);
+int	fdf_graphic_management(t_fdf *fdf);
+int	fdf_deal_key(t_fdf *fdf);
+int	fdf_normal_exit(t_fdf *fdf);
 
 #endif
