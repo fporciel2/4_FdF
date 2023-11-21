@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/21 14:11:08 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:13:11 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -64,7 +64,7 @@ typedef struct s_fdf
 	char	**spline;
 	int		**map;
 	int		bits;
-	int		llen;
+	int		row;
 	int		endian;
 	int		fd;
 	int		width;
@@ -90,5 +90,6 @@ int		fdf_deal_key(t_fdf *fdf);
 int		fdf_normal_exit(t_fdf *fdf);
 char	**fdf_free_split(char **split);
 int		fdf_free_map(t_fdf *fdf);
+int		fdf_mlx(t_fdf *fdf);
 
 #endif

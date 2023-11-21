@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   fdf_mlx.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 10:18:37 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/21 14:57:41 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/21 14:57:57 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/21 15:17:22 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,41 +31,43 @@
 
 #include "fdf.h"
 
-static int	fdf_check_filename(char *name)
+static int	fdf_generate_image(t_fdf *fdf)
 {
-	int		namelen;
-	int		fd;
-
-	namelen = ft_strlen(name);
-	if ((name[namelen - 1] != 102) || (name[namelen - 2] != 100)
-		|| (name[namelen - 3] != 102) || (name[namelen - 4] != 46))
-		return (0);
-	fd = open(name, O_RDONLY);
-	if (fd < 0)
-	{
-		if (close(fd) < 0)
-			return (fdf_nonexistent_file_error());
-		return (0);
-	}
-	if (close(fd) < 0)
-		return (fdf_generic_error(NULL));
-	return (1);
+	fdf->img = mlx_new_image(fdf->dsp, IMGX, IMGY);
+	if (fdf->img == NULL)
+		fdf->imap = fdf_generic_error(fdf);
+	fdf->data = mlx_get_data_addr(fdf->img, &(fdf->bits),
+			&(fdf->row), &(fdf->endian));
+	if (fdf->data == NULL)
+		fdf->imap = fdf_generic_error(fdf);
+	//mlx_put_image_to_window(fdf->display, fdf->window, fdf->image, 0, 0);
+	return (0);
 }
 
-int	main(int argc, char **argv)
+static int	fdf_hook_events(int keysym, t_fdf *fdf)
 {
-	static t_fdf	fdf;
-	int				i;
+	if (keysym == 0)
+	{
+		mlx_hook(fdf->win, KeyPress,
+			KeyPressMask, fdf_hook_events, fdf);
+		mlx_hook(fdf->win, DestroyNotify,
+			ButtonPressMask, fdf_normal_exit, fdf);
+	}
+	else if (keysym == XK_Escape)
+		fdf->imap = fdf_normal_exit(fdf);
+	return (0);
+}
 
-	if (argc != 2)
-		return (fdf_invalid_argument_error());
-	if (!fdf_check_filename(argv[1]))
-		return (fdf_nonexistent_file_error());
-	fdf.width = 0;
-	fdf.height = fdf_get_height_and_width(&fdf, argv[1]) - 1;
-	fdf.map = fdf_prepare_map(&fdf, argv[1]);
-	fdf.fd = 0;
-	i = fdf_mlx(&fdf);
-	i = fdf_normal_exit(&fdf);
-	return (i);
+int	fdf_mlx(t_fdf *fdf)
+{
+	fdf->dsp = mlx_init();
+	if (fdf->dsp == NULL)
+		fdf->imap = fdf_generic_error(fdf);
+	fdf->win = mlx_new_window(fdf->dsp, WINX, WINY, "FDF");
+	if (fdf->win == NULL)
+		fdf->imap = fdf_generic_error(fdf);
+	fdf_hook_events(0, fdf);
+	fdf_generate_image(fdf);
+	mlx_loop(fdf->dsp);
+	return (fdf->imap);
 }
