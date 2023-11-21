@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 11:04:31 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/21 15:17:39 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:18:33 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -59,7 +59,7 @@ static int	fdf_clean_all(t_fdf *fdf)
 		fdf->spline = fdf_free_split(fdf->spline);
 	if (fdf->img != NULL)
 		mlx_destroy_image(fdf->dsp, fdf->img);
-	if (fdf->win!= NULL)
+	if (fdf->win != NULL)
 		mlx_destroy_window(fdf->dsp, fdf->win);
 	if (fdf->dsp != NULL)
 		mlx_destroy_display(fdf->dsp);
