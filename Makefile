@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/21 09:38:20 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/21 09:59:45 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -37,7 +37,7 @@ DIR := $(shell pwd)
 DMLX := $(DIR)/minilibx-linux
 DFT := $(DIR)/1_libft
 DPRINTF := $(DIR)/2_ft_printf
-DINCLUDE := $(DIR) $(DMLX) $(FT) $(DPRINTF)
+DINCLUDE := $(DIR) $(DMLX) $(DFT) $(DPRINTF)
 FDFH := $(DIR)/fdf.h
 BFDFH := $(DIR)/fdf_bonus.h
 MLXH := $(DMLX)/mlx.h
@@ -79,11 +79,11 @@ $(LFDF): $(OBJS)
 $(LBFDF): $(BOBJS)
 	ar rcs $@ $(BOBJS) $(BHEADERS)
 
-$(OBJS): $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) $(SRCS)
+$(OBJS): $(HEADERS) $(SRCS)
+	$(CC) $(CFLAGS) -c $(SRCS)
 
-$(BOBJS): $(BSRCS) $(BHEADERS)
-	$(CC) $(CFLAGS) $(BSRCS)
+$(BOBJS): $(BHEADERS) $(BSRCS)
+	$(CC) $(CFLAGS) -c $(BSRCS)
 
 mlx: $(LMLX)
 
