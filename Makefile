@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/21 09:37:24 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/21 09:38:20 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -80,10 +80,10 @@ $(LBFDF): $(BOBJS)
 	ar rcs $@ $(BOBJS) $(BHEADERS)
 
 $(OBJS): $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) $(SRCS) $(HEADERS)
+	$(CC) $(CFLAGS) $(SRCS)
 
 $(BOBJS): $(BSRCS) $(BHEADERS)
-	$(CC) $(CFLAGS) $(BSRCS) $(HEADERS)
+	$(CC) $(CFLAGS) $(BSRCS)
 
 mlx: $(LMLX)
 
