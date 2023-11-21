@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:57:57 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/21 15:17:22 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/21 15:30:16 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -43,7 +43,7 @@ static int	fdf_generate_image(t_fdf *fdf)
 	//mlx_put_image_to_window(fdf->display, fdf->window, fdf->image, 0, 0);
 	return (0);
 }
-
+/*
 static int	fdf_hook_events(int keysym, t_fdf *fdf)
 {
 	if (keysym == 0)
@@ -56,7 +56,9 @@ static int	fdf_hook_events(int keysym, t_fdf *fdf)
 	else if (keysym == XK_Escape)
 		fdf->imap = fdf_normal_exit(fdf);
 	return (0);
-}
+}*/
+
+static int	fdf_hook(int keysym, t_fdf *fdf)
 
 int	fdf_mlx(t_fdf *fdf)
 {
@@ -66,7 +68,9 @@ int	fdf_mlx(t_fdf *fdf)
 	fdf->win = mlx_new_window(fdf->dsp, WINX, WINY, "FDF");
 	if (fdf->win == NULL)
 		fdf->imap = fdf_generic_error(fdf);
-	fdf_hook_events(0, fdf);
+	mlx_hook(fdf->win, KeyPress, KeyPressMask, fdf_hook, fdf);
+	mlx_hook(fdf->win, DestroyNotify, ButtonPressMask, fdf_normal_exit, fdf);
+	//fdf_hook_events(0, fdf);
 	fdf_generate_image(fdf);
 	mlx_loop(fdf->dsp);
 	return (fdf->imap);
