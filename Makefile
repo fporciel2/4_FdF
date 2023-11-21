@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/21 09:59:45 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/21 10:01:57 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -51,8 +51,8 @@ LBFDF := $(DIR)/libfdfbonus.a
 LMLX := $(DMLX)/libmlx.a $(DMLX)/libmlx_Linux.a
 LFT := $(DFT)/libft.a
 LPRINTF := $(DPRINTF)/libftprintf.a
-LIBS := $(LFT) $(LPRINTF) $(LMLX)
-BLIBS := $(LFT) $(LPRINTF) $(MLX)
+LIBS := $(LFT) $(LPRINTF) $(LMLX) $(LFDF)
+BLIBS := $(LFT) $(LPRINTF) $(MLX) $(LBFDF)
 SRCS := $(filter-out %bonus.c, $(wildcard fdf*.c))
 BSRCS := $(wildcard fdf*bonus.c)
 OBJS := $(patsubst %.c, %.o, $(SRCS))
