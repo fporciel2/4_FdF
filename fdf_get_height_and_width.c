@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 11:42:52 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 14:34:09 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/21 11:08:37 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -34,8 +34,21 @@
 static void	fdf_get_width(t_fdf *fdf)
 {
 	int	width;
+	int	i;
 
-	width = ft_strlen(fdf->line);
+	width = 0;
+	i = 0;
+	while (((fdf->line)[i]) != 0)
+	{
+		if (!ft_isdigit((fdf->line)[i]))
+		{
+			width++;
+			while ((fdf->line)[i] && !ft_isdigit((fdf->line)[i]))
+				i++;
+		}
+		if ((fdf->line)[i] != 0)
+			i++;
+	}
 	if (width > fdf->width)
 		fdf->width = width;
 }
@@ -59,7 +72,8 @@ int	fdf_get_height_and_width(t_fdf *fdf, char *argvi)
 		if (fdf->line == NULL)
 			fdf->stop = 0;
 		(fdf->height)++;
-		fdf_get_width(fdf);
+		if (fdf->line != NULL)
+			fdf_get_width(fdf);
 		free(fdf->line);
 	}
 	if (close(fdf->fd) < 0)

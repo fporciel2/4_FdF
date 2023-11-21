@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:52:15 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/21 09:27:27 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/21 10:38:59 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -35,7 +35,7 @@ int	fdf_free_map(t_fdf *fdf)
 {
 	ssize_t	imap;
 
-	imap = fdf->width;
+	imap = fdf->height;
 	while (imap != fdf->imap)
 	{
 		free(((fdf->map)[imap]));
@@ -83,7 +83,8 @@ static void	fdf_fill_map(t_fdf *fdf, char *name)
 			fdf_generic_error(fdf);
 		if (fdf->line == NULL)
 			fdf->stop = 0;
-		fdf_continue_fill_map(fdf, j);
+		if (fdf->line != NULL)
+			fdf_continue_fill_map(fdf, j);
 		free(fdf->line);
 		j++;
 	}
