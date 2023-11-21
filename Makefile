@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/21 09:17:49 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/21 09:37:24 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -40,11 +40,12 @@ DPRINTF := $(DIR)/2_ft_printf
 DINCLUDE := $(DIR) $(DMLX) $(FT) $(DPRINTF)
 FDFH := $(DIR)/fdf.h
 BFDFH := $(DIR)/fdf_bonus.h
-MLXH := $(DMLX)/mlx.h $(DMLX)/mlx_int.h
+MLXH := $(DMLX)/mlx.h
+MLXHINT := $(DMLX)/mlx_int.h
 FTH := $(DFT)/libft.h
 PRINTFH := $(DPRINTF)/ft_printf.h
-HEADERS := $(FDFH) $(MLXH) $(FTH) $(PRINTFH)
-BHEADERS := $(BFDFH) $(MLXH) $(FTH) $(PRINTFH)
+HEADERS := $(FDFH) $(MLXH) $(MLXHINT) $(FTH) $(PRINTFH)
+BHEADERS := $(BFDFH) $(MLXH) $(MLXHINT) $(FTH) $(PRINTFH)
 LFDF := $(DIR)/libfdf.a
 LBFDF := $(DIR)/libfdfbonus.a
 LMLX := $(DMLX)/libmlx.a $(DMLX)/libmlx_Linux.a
@@ -57,7 +58,7 @@ BSRCS := $(wildcard fdf*bonus.c)
 OBJS := $(patsubst %.c, %.o, $(SRCS))
 BOBJS := $(patsubst %.c, %.o, $(BSRCS))
 CC := gcc
-CFLAGS := gcc -std=c17 -pedantic -Wall -Wextra -Werror -O3 -march=native -g \
+CFLAGS := -std=c17 -pedantic -Wall -Wextra -Werror -O3 -march=native -g \
 		  $(addprefix -I, $(DINCLUDE))
 LDLIBS := $(addprefix -L, $(DINCLUDE))
 LDFLAGS := -lmlx -lft -lftprintf -lXext -lX11 -lm
@@ -79,10 +80,10 @@ $(LBFDF): $(BOBJS)
 	ar rcs $@ $(BOBJS) $(BHEADERS)
 
 $(OBJS): $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) $(SRCS)
+	$(CC) $(CFLAGS) $(SRCS) $(HEADERS)
 
 $(BOBJS): $(BSRCS) $(BHEADERS)
-	$(CC) $(CFLAGS) $(BSRCS)
+	$(CC) $(CFLAGS) $(BSRCS) $(HEADERS)
 
 mlx: $(LMLX)
 

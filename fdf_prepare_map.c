@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:52:15 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/19 15:17:17 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/21 09:27:27 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -93,18 +93,27 @@ static void	fdf_fill_map(t_fdf *fdf, char *name)
 
 int	**fdf_prepare_map(t_fdf *fdf, char *name)
 {
+	int	result;
+
 	fdf->map = (int **)malloc(sizeof(int *) * (fdf->height + 1));
 	if (fdf->map == NULL)
-		return (&(&fdf_generic_error(fdf)));
+	{
+		result = fdf_generic_error(fdf);
+		return (fdf->map);
+	}
 	((fdf->map)[fdf->height]) = NULL;
 	fdf->imap = fdf->height;
 	while (fdf->imap >= 0)
 	{
 		((fdf->map)[fdf->imap]) = (int *)malloc(sizeof(int) * (fdf->width + 1));
 		if (((fdf->map)[fdf->imap]) == NULL)
-			return (&(&fdf_generic_error(fdf)));
+		{
+			result = fdf_generic_error(fdf);
+			return (fdf->map);
+		}
 		(fdf->imap)--;
 	}
+	(void)result;
 	fdf_fill_map(fdf, name);
 	return (fdf->map);
 }
