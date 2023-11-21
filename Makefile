@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/19 15:12:10 by fporciel         ###   ########.fr        #
+#    Updated: 2023/11/21 09:17:49 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -62,12 +62,12 @@ CFLAGS := gcc -std=c17 -pedantic -Wall -Wextra -Werror -O3 -march=native -g \
 LDLIBS := $(addprefix -L, $(DINCLUDE))
 LDFLAGS := -lmlx -lft -lftprintf -lXext -lX11 -lm
 
-all: $(NAME)
+all: ft printf mlx $(NAME)
 
 $(NAME): $(LFDF)
 	$(CC) $(CFLAGS) $(LFDF) $(LDLIBS) $(LDFLAGS) -o $@
 
-bonus: $(BNAME)
+bonus: ft printf mlx $(BNAME)
 
 $(BNAME): $(LBFDF)
 	$(CC) $(CFLAGS) $(LBFDF) $(LDLIBS) $(LDFLAGS) -o $@
@@ -78,10 +78,10 @@ $(LFDF): $(OBJS)
 $(LBFDF): $(BOBJS)
 	ar rcs $@ $(BOBJS) $(BHEADERS)
 
-$(OBJS): ft printf mlx $(SRCS) $(HEADERS)
+$(OBJS): $(SRCS) $(HEADERS)
 	$(CC) $(CFLAGS) $(SRCS)
 
-$(BOBJS): ft printf mlx $(BSRCS) $(BHEADERS)
+$(BOBJS): $(BSRCS) $(BHEADERS)
 	$(CC) $(CFLAGS) $(BSRCS)
 
 mlx: $(LMLX)
