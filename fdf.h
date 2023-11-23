@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/21 15:13:11 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/23 11:45:04 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -54,6 +54,9 @@
 # define IMGX	1920
 # define IMGY	1080
 
+# define WHITE	0xffffff
+# define RED	0xe80c0c
+
 typedef struct s_fdf
 {
 	void	*dsp;
@@ -91,5 +94,8 @@ int		fdf_normal_exit(t_fdf *fdf);
 char	**fdf_free_split(char **split);
 int		fdf_free_map(t_fdf *fdf);
 int		fdf_mlx(t_fdf *fdf);
+int		fdf_max(int a, int b);
+int		fdf_absval(int a);
+void	fdf_put_pixel(t_fdf *fdf, int x, int y, int color);
 
 #endif
