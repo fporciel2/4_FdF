@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:57:57 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/23 09:13:33 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/23 16:05:14 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -40,8 +40,9 @@ static int	fdf_generate_image(t_fdf *fdf)
 			&(fdf->row), &(fdf->endian));
 	if (fdf->data == NULL)
 		fdf->imap = fdf_generic_error(fdf);
+	fdf->imap = fdf_generate_model(fdf);
 	//mlx_put_image_to_window(fdf->display, fdf->window, fdf->image, 0, 0);
-	return (0);
+	return (i);
 }
 
 static int	fdf_hook(int keysym, t_fdf *fdf)

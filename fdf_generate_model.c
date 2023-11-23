@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   fdf_generate_model.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 10:18:37 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/23 16:01:50 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/23 16:06:56 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/23 16:19:11 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,41 +31,24 @@
 
 #include "fdf.h"
 
-static int	fdf_check_filename(char *name)
+static int	fdf_generate_basic_model(t_fdf *fdf)
 {
-	int		namelen;
-	int		fd;
+	int	x;
+	int	y;
+	int	x1;
+	int	y1;
 
-	namelen = ft_strlen(name);
-	if ((name[namelen - 1] != 102) || (name[namelen - 2] != 100)
-		|| (name[namelen - 3] != 102) || (name[namelen - 4] != 46))
-		return (0);
-	fd = open(name, O_RDONLY);
-	if (fd < 0)
+	y = 0;
+	while (y < fdf->height)
 	{
-		if (close(fd) < 0)
-			return (fdf_nonexistent_file_error());
-		return (0);
+		x = 0;
 	}
-	if (close(fd) < 0)
-		return (fdf_generic_error(NULL));
-	return (1);
 }
 
-int	main(int argc, char **argv)
+int	fdf_generate_model(t_fdf *fdf)
 {
-	static t_fdf	fdf;
-	int				i;
-
-	if (argc != 2)
-		return (fdf_invalid_argument_error());
-	if (!fdf_check_filename(argv[1]))
-		return (fdf_nonexistent_file_error());
-	fdf.width = 0;
-	fdf.height = fdf_get_height_and_width(&fdf, argv[1]) - 1;
-	fdf.map = fdf_prepare_map(&fdf, argv[1]);
-	fdf.fd = 0;
-	i = fdf_mlx(&fdf);
-	i = fdf_normal_exit(&fdf);
-	return (i);
+	if ((fdf->x0 == 0) && (fdf->y0 == 0) && (fdf->dx == 0) && (fdf->dy == 0)
+			&& (fdf->sx == 0) && (fdf->sy == 0) && (fdf->e == 0) && (fdf->e2 == 0))
+		fdf->imap = fdf_generate_basic_model(fdf);
+	return (0);
 }

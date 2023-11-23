@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/23 12:02:35 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/23 16:06:05 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -106,5 +106,6 @@ int		fdf_max(int a, int b);
 int		fdf_absval(int a);
 void	fdf_put_pixel(t_fdf *fdf, int x, int y, int color);
 int		fdf_bresenham(t_fdf *fdf, int x1, int y1);
+int		fdf_generate_model(fdf);
 
 #endif
