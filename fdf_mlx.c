@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:57:57 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/21 15:30:16 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/23 08:52:05 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -59,6 +59,11 @@ static int	fdf_hook_events(int keysym, t_fdf *fdf)
 }*/
 
 static int	fdf_hook(int keysym, t_fdf *fdf)
+{
+	if (keysym == XK_Escape)
+		fdf->imap = fdf_normal_exit(fdf);
+	return (0);
+}
 
 int	fdf_mlx(t_fdf *fdf)
 {
