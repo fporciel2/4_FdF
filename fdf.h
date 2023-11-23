@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/23 11:45:04 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/23 12:02:35 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -77,6 +77,14 @@ typedef struct s_fdf
 	ssize_t	c;
 	ssize_t	i;
 	ssize_t	s;
+	int		x0;
+	int		y0;
+	int		dx;
+	int		dy;
+	int		sx;
+	int		sy;
+	int		e;
+	int		e2;
 }			t_fdf;
 
 int		fdf_invalid_argument_error(void);
@@ -97,5 +105,6 @@ int		fdf_mlx(t_fdf *fdf);
 int		fdf_max(int a, int b);
 int		fdf_absval(int a);
 void	fdf_put_pixel(t_fdf *fdf, int x, int y, int color);
+int		fdf_bresenham(t_fdf *fdf, int x1, int y1);
 
 #endif
