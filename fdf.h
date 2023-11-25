@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/23 16:06:05 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/25 17:29:11 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -54,8 +54,16 @@
 # define IMGX	1920
 # define IMGY	1080
 
+# define STARTX	480
+# define STARTY	270
+
+# define ENDX	1440
+# define ENDY	810
+
 # define WHITE	0xffffff
 # define RED	0xe80c0c
+
+/*fdf->dsty(fdf->dstx) == (ENDY(ENDX) - STARTY(STARTX)) / fdf->height(fdf->width)*/
 
 typedef struct s_fdf
 {
@@ -72,19 +80,30 @@ typedef struct s_fdf
 	int		fd;
 	int		width;
 	int		height;
+	int		dsty;
+	int		dstx;
 	int		stop;
 	ssize_t	imap;
 	ssize_t	c;
 	ssize_t	i;
 	ssize_t	s;
 	int		x0;
+	int		x1;
+	int		xp;
+	int		xu;
+	int		xt;
 	int		y0;
+	int		y1;
+	int		yp;
+	int		yu;
+	int		yt;
 	int		dx;
 	int		dy;
 	int		sx;
 	int		sy;
 	int		e;
 	int		e2;
+	float	angle;
 }			t_fdf;
 
 int		fdf_invalid_argument_error(void);
@@ -106,6 +125,6 @@ int		fdf_max(int a, int b);
 int		fdf_absval(int a);
 void	fdf_put_pixel(t_fdf *fdf, int x, int y, int color);
 int		fdf_bresenham(t_fdf *fdf, int x1, int y1);
-int		fdf_generate_model(fdf);
+int		fdf_generate_model(t_fdf *fdf);
 
 #endif
