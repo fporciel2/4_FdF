@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/26 11:13:29 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/26 14:13:31 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -133,5 +133,6 @@ int		fdf_bresenham(t_fdf *fdf, int x1, int y1);
 int		fdf_generate_model(t_fdf *fdf);
 int		fdf_generate_list(t_fdf *fdf, int x, int y);
 int		fdf_draw_model(t_fdf *fdf, int x, int y);
+int		fdf_cancel_list(t_fdf *fdf);
 
 #endif

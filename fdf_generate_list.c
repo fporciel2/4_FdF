@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 10:52:16 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/26 11:26:17 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/26 14:33:34 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -33,6 +33,16 @@
 
 static int	fdf_set_point(t_fdf *fdf, int x, int y)
 {
+	if (y == 0)
+		fdf->cur->y = STARTY;
+	else
+		fdf->cur->y = y * fdf->dsty;
+	if (x == 0)
+		fdf->cur->x = STARTX;
+	else
+		fdf->cur->x = x * fdf->dstx;
+	fdf->cur->z = (fdf->map)[y][x];
+	return (0);
 }
 
 int	fdf_generate_list(t_fdf *fdf, int x, int y)
@@ -40,14 +50,18 @@ int	fdf_generate_list(t_fdf *fdf, int x, int y)
 	if ((x == 0) && (y == 0))
 	{
 		fdf->lst = (t_map *)malloc(sizeof(t_map));
+		if (fdf->cur == NULL)
+			return (fdf_generic_error(fdf));
 		fdf->cur = fdf->lst;
+		fdf->cur->next = NULL;
 	}
 	else
 	{
 		fdf->cur->next = (t_map *)malloc(sizeof(t_map));
+		if (fdf->cur == NULL)
+			return (fdf_generic_error(fdf));
 		fdf->cur = fdf->cur->next;
+		fdf->cur->next = NULL;
 	}
-	if (fdf->cur == NULL)
-		return (fdf_generic_error(fdf));
 	return (fdf_set_point(fdf, x, y));
 }

@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:06:56 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/26 11:12:45 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/26 14:54:57 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -35,8 +35,6 @@ static int	fdf_generate_basic_model(t_fdf *fdf)
 {
 	int	x;
 	int	y;
-	int	x1;
-	int	y1;
 
 	y = 0;
 	while (y < fdf->height)
@@ -59,6 +57,7 @@ int	fdf_generate_model(t_fdf *fdf)
 {
 	fdf->dsty =  (ENDY - STARTY) / fdf->height;
 	fdf->dstx = (ENDX - STARTX) / fdf->width;
+	fdf->angle = 0.8;
 	if ((fdf->x0 == 0) && (fdf->y0 == 0) && (fdf->dx == 0) && (fdf->dy == 0)
 			&& (fdf->sx == 0) && (fdf->sy == 0) && (fdf->e == 0) && (fdf->e2 == 0))
 		fdf->imap = fdf_generate_basic_model(fdf);

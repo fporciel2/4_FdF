@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_errors.c                                       :+:      :+:    :+:   */
+/*   fdf_cancel_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 10:44:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/26 14:25:04 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/26 14:09:51 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/26 14:23:27 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,24 +31,21 @@
 
 #include "fdf.h"
 
-int	fdf_invalid_argument_error(void)
+int	fdf_cancel_list(t_fdf *fdf)
 {
-	return (perror(strerror(EINVAL)), 0);
-}
+	t_map	*swap;
 
-int	fdf_nonexistent_file_error(void)
-{
-	return (perror(strerror(errno)), exit(EXIT_FAILURE), 0);
-}
-
-int	fdf_generic_error(t_fdf *fdf)
-{
-	int	ret;
-
-	if (fdf == NULL)
-		return (perror(strerror(errno)), exit(EXIT_FAILURE), 0);
-	ret = fdf_free_map(fdf);
-	ret = fdf_cancel_list(fdf);
-	ret = fdf_memory_cleaner(fdf);
-	return (perror(strerror(errno)), exit(EXIT_FAILURE), ret);
+	while (fdf->lst && fdf->cur)
+	{
+		if (fdf->lst == fdf->cur)
+		{
+			free(fdf->lst);
+			fdf->lst = NULL;
+			fdf->cur = NULL;
+		}
+		swap = fdf->lst->next;
+		free(fdf->lst);
+		fdf->lst = swap;
+	}
+	return (0);
 }
