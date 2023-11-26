@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/25 17:29:11 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/26 11:13:29 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -65,46 +65,51 @@
 
 /*fdf->dsty(fdf->dstx) == (ENDY(ENDX) - STARTY(STARTX)) / fdf->height(fdf->width)*/
 
+typedef struct s_map
+{
+	int	x;
+	int	y;
+	int	z;
+}		t_map;
+
 typedef struct s_fdf
 {
-	void	*dsp;
-	void	*win;
-	void	*img;
-	char	*data;
-	char	*line;
-	char	**spline;
-	int		**map;
-	int		bits;
-	int		row;
-	int		endian;
-	int		fd;
-	int		width;
-	int		height;
-	int		dsty;
-	int		dstx;
-	int		stop;
-	ssize_t	imap;
-	ssize_t	c;
-	ssize_t	i;
-	ssize_t	s;
-	int		x0;
-	int		x1;
-	int		xp;
-	int		xu;
-	int		xt;
-	int		y0;
-	int		y1;
-	int		yp;
-	int		yu;
-	int		yt;
-	int		dx;
-	int		dy;
-	int		sx;
-	int		sy;
-	int		e;
-	int		e2;
-	float	angle;
-}			t_fdf;
+	void			*dsp;
+	void			*win;
+	void			*img;
+	char			*data;
+	char			*line;
+	char			**spline;
+	int				**map;
+	int				bits;
+	int				row;
+	int				endian;
+	int				fd;
+	int				width;
+	int				height;
+	int				dsty;
+	int				dstx;
+	int				stop;
+	ssize_t			imap;
+	ssize_t			c;
+	ssize_t			i;
+	ssize_t			s;
+	int				x;
+	int				x0;
+	int				x1;
+	int				y;
+	int				y0;
+	int				y1;
+	int				dx;
+	int				dy;
+	int				sx;
+	int				sy;
+	int				e;
+	int				e2;
+	float			angle;
+	struct s_map	*lst;
+	struct s_map	*cur;
+}					t_fdf;
 
 int		fdf_invalid_argument_error(void);
 int		fdf_nonexistent_file_error(void);
@@ -126,5 +131,7 @@ int		fdf_absval(int a);
 void	fdf_put_pixel(t_fdf *fdf, int x, int y, int color);
 int		fdf_bresenham(t_fdf *fdf, int x1, int y1);
 int		fdf_generate_model(t_fdf *fdf);
+int		fdf_generate_list(t_fdf *fdf, int x, int y);
+int		fdf_draw_model(t_fdf *fdf, int x, int y);
 
 #endif

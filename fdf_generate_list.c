@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_generate_model.c                               :+:      :+:    :+:   */
+/*   fdf_generate_list.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/23 16:06:56 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/26 11:12:45 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/26 10:52:16 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/26 11:26:17 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,36 +31,23 @@
 
 #include "fdf.h"
 
-static int	fdf_generate_basic_model(t_fdf *fdf)
+static int	fdf_set_point(t_fdf *fdf, int x, int y)
 {
-	int	x;
-	int	y;
-	int	x1;
-	int	y1;
-
-	y = 0;
-	while (y < fdf->height)
-	{
-		x = 0;
-		while (x < fdf->width)
-		{
-			fdf->x = x;
-			fdf->y = y;
-			fdf->imap = fdf_generate_list(fdf, x, y);
-			fdf->imap = fdf_draw_model(fdf, x, y);
-			x++;
-		}
-		y++;
-	}
-	return (fdf->imap);
 }
 
-int	fdf_generate_model(t_fdf *fdf)
+int	fdf_generate_list(t_fdf *fdf, int x, int y)
 {
-	fdf->dsty =  (ENDY - STARTY) / fdf->height;
-	fdf->dstx = (ENDX - STARTX) / fdf->width;
-	if ((fdf->x0 == 0) && (fdf->y0 == 0) && (fdf->dx == 0) && (fdf->dy == 0)
-			&& (fdf->sx == 0) && (fdf->sy == 0) && (fdf->e == 0) && (fdf->e2 == 0))
-		fdf->imap = fdf_generate_basic_model(fdf);
-	return (0);
+	if ((x == 0) && (y == 0))
+	{
+		fdf->lst = (t_map *)malloc(sizeof(t_map));
+		fdf->cur = fdf->lst;
+	}
+	else
+	{
+		fdf->cur->next = (t_map *)malloc(sizeof(t_map));
+		fdf->cur = fdf->cur->next;
+	}
+	if (fdf->cur == NULL)
+		return (fdf_generic_error(fdf));
+	return (fdf_set_point(fdf, x, y));
 }
