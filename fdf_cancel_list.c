@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 14:09:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/26 14:23:27 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:16:35 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -42,6 +42,7 @@ int	fdf_cancel_list(t_fdf *fdf)
 			free(fdf->lst);
 			fdf->lst = NULL;
 			fdf->cur = NULL;
+			return (0);
 		}
 		swap = fdf->lst->next;
 		free(fdf->lst);

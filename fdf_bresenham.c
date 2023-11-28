@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:48:59 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/23 12:17:34 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/28 09:32:07 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -57,7 +57,7 @@ static int	fdf_draw_line_loop(t_fdf *fdf, int x1, int y1)
 	return (0);
 }
 
-int	fdf_draw_line(t_fdf *fdf, int x1, int y1)
+int	fdf_bresenham(t_fdf *fdf, int x1, int y1)
 {
 	fdf->dx = fdf_absval(x1 - fdf->x0);
 	if (fdf->x0 < x1)

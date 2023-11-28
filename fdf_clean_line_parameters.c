@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_mlx.c                                          :+:      :+:    :+:   */
+/*   fdf_clean_line_parameters.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/21 14:57:57 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/28 09:23:25 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/28 09:09:36 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/28 09:12:50 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,38 +31,17 @@
 
 #include "fdf.h"
 
-static int	fdf_generate_image(t_fdf *fdf)
+int	fdf_clean_line_parameters(t_fdf *fdf)
 {
-	fdf->img = mlx_new_image(fdf->dsp, IMGX, IMGY);
-	if (fdf->img == NULL)
-		fdf->imap = fdf_generic_error(fdf);
-	fdf->data = mlx_get_data_addr(fdf->img, &(fdf->bits),
-			&(fdf->row), &(fdf->endian));
-	if (fdf->data == NULL)
-		fdf->imap = fdf_generic_error(fdf);
-	fdf->imap = fdf_generate_model(fdf);
-	mlx_put_image_to_window(fdf->dsp, fdf->win, fdf->img, 0, 0);
-	return (fdf->imap);
-}
-
-static int	fdf_hook(int keysym, t_fdf *fdf)
-{
-	if (keysym == XK_Escape)
-		fdf->imap = fdf_normal_exit(fdf);
+	fdf->x0 = 0;
+	fdf->x1 = 0;
+	fdf->y0 = 0;
+	fdf->y1 = 0;
+	fdf->dx = 0;
+	fdf->dy = 0;
+	fdf->sx = 0;
+	fdf->sy = 0;
+	fdf->e = 0;
+	fdf->e2 = 0;
 	return (0);
-}
-
-int	fdf_mlx(t_fdf *fdf)
-{
-	fdf->dsp = mlx_init();
-	if (fdf->dsp == NULL)
-		fdf->imap = fdf_generic_error(fdf);
-	fdf->win = mlx_new_window(fdf->dsp, WINX, WINY, "FDF");
-	if (fdf->win == NULL)
-		fdf->imap = fdf_generic_error(fdf);
-	mlx_hook(fdf->win, KeyPress, KeyPressMask, fdf_hook, fdf);
-	mlx_hook(fdf->win, DestroyNotify, ButtonPressMask, fdf_normal_exit, fdf);
-	fdf_generate_image(fdf);
-	mlx_loop(fdf->dsp);
-	return (fdf->imap);
 }

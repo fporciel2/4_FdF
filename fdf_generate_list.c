@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 10:52:16 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/26 14:33:34 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/28 11:26:55 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,6 +31,12 @@
 
 #include "fdf.h"
 
+/*
+ 	if (fdf->cur->z < 0)
+		fdf->cur->y -= fdf->cur->z;
+	else
+		fdf->cur->y += fdf->cur->z;
+ */
 static int	fdf_set_point(t_fdf *fdf, int x, int y)
 {
 	if (y == 0)
@@ -50,7 +56,7 @@ int	fdf_generate_list(t_fdf *fdf, int x, int y)
 	if ((x == 0) && (y == 0))
 	{
 		fdf->lst = (t_map *)malloc(sizeof(t_map));
-		if (fdf->cur == NULL)
+		if (fdf->lst == NULL)
 			return (fdf_generic_error(fdf));
 		fdf->cur = fdf->lst;
 		fdf->cur->next = NULL;
@@ -58,7 +64,7 @@ int	fdf_generate_list(t_fdf *fdf, int x, int y)
 	else
 	{
 		fdf->cur->next = (t_map *)malloc(sizeof(t_map));
-		if (fdf->cur == NULL)
+		if (fdf->cur->next == NULL)
 			return (fdf_generic_error(fdf));
 		fdf->cur = fdf->cur->next;
 		fdf->cur->next = NULL;

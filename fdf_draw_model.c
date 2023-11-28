@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 14:37:29 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/26 15:28:25 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/28 11:27:21 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -33,7 +33,7 @@
 
 static t_map	*fdf_find_correct_point(t_fdf *fdf, int x, int y, t_map *tmp)
 {
-	int	py;
+	int		py;
 	int		px;
 	int		ty;
 
@@ -48,7 +48,9 @@ static t_map	*fdf_find_correct_point(t_fdf *fdf, int x, int y, t_map *tmp)
 			ty++;
 		}
 		tmp = tmp->next;
+		px++;
 	}
+	return (tmp);
 }
 
 static int	fdf_ordinate_connection(t_fdf *fdf, int x, int y)
@@ -59,8 +61,8 @@ static int	fdf_ordinate_connection(t_fdf *fdf, int x, int y)
 	tmp = fdf_find_correct_point(fdf, x, y, tmp);
 	fdf->x0 = tmp->x;
 	fdf->y0 = tmp->y;
-	fdf->x1 = fdf->curr->x;
-	fdf->y1 = fdf->curr->y;
+	fdf->x1 = fdf->cur->x;
+	fdf->y1 = fdf->cur->y;
 	fdf->imap = fdf_bresenham(fdf, fdf->x1, fdf->y1);
 	return (fdf->imap);
 }
@@ -74,8 +76,8 @@ static int	fdf_axis_connection(t_fdf *fdf)
 		tmp = tmp->next;
 	fdf->x0 = tmp->x;
 	fdf->y0 = tmp->y;
-	fdf->x1 = fdf->curr->x;
-	fdf->y1 = fdf->curr->y;
+	fdf->x1 = fdf->cur->x;
+	fdf->y1 = fdf->cur->y;
 	fdf->imap = fdf_bresenham(fdf, fdf->x1, fdf->y1);
 	return (fdf->imap);
 }
@@ -86,7 +88,7 @@ static int	fdf_project_point(t_fdf *fdf)
 	int	py;
 
 	px = (int)((fdf->cur->x - fdf->cur->y) * cos(fdf->angle));
-	py = (int)((fdf->cur->x + fdf->cur->y) * sin(angle) - fdf->cur->z);
+	py = (int)((fdf->cur->x + fdf->cur->y) * sin(fdf->angle) - fdf->cur->z);
 	fdf->cur->x = px;
 	fdf->cur->y = py;
 	return (0);

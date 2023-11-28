@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/26 14:13:31 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/28 09:20:57 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -67,10 +67,11 @@
 
 typedef struct s_map
 {
-	int	x;
-	int	y;
-	int	z;
-}		t_map;
+	int				x;
+	int				y;
+	int				z;
+	struct s_map	*next;
+}					t_map;
 
 typedef struct s_fdf
 {
@@ -116,10 +117,7 @@ int		fdf_nonexistent_file_error(void);
 int		fdf_generic_error(t_fdf *fdf);
 int		fdf_get_height_and_width(t_fdf *fdf, char *argvi);
 int		**fdf_prepare_map(t_fdf *fdf, char *name);
-int		fdf_put_pixel(void);
 int		fdf_memory_cleaner(t_fdf *fdf);
-int		fdf_draw_line(t_fdf *fdf);
-int		fdf_draw_lines(t_fdf *fdf);
 int		fdf_graphic_management(t_fdf *fdf);
 int		fdf_deal_key(t_fdf *fdf);
 int		fdf_normal_exit(t_fdf *fdf);
@@ -134,5 +132,6 @@ int		fdf_generate_model(t_fdf *fdf);
 int		fdf_generate_list(t_fdf *fdf, int x, int y);
 int		fdf_draw_model(t_fdf *fdf, int x, int y);
 int		fdf_cancel_list(t_fdf *fdf);
+int		fdf_clean_line_parameters(t_fdf *fdf);
 
 #endif
