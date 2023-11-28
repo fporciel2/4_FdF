@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/28 09:20:57 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/28 14:16:33 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -53,6 +53,9 @@
 
 # define IMGX	1920
 # define IMGY	1080
+
+# define MIDX	960
+# define MIDY	540
 
 # define STARTX	480
 # define STARTY	270
@@ -107,6 +110,8 @@ typedef struct s_fdf
 	int				sy;
 	int				e;
 	int				e2;
+	int				prevx;
+	int				prevy;
 	float			angle;
 	struct s_map	*lst;
 	struct s_map	*cur;

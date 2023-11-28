@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 14:37:29 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/28 11:27:21 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:28:50 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,77 +31,47 @@
 
 #include "fdf.h"
 
-static t_map	*fdf_find_correct_point(t_fdf *fdf, int x, int y, t_map *tmp)
+/*
+ *void	space_and_scale(t_date *inf)
 {
-	int		py;
-	int		px;
-	int		ty;
+	double	may;
+	double	might;
+	double	ipo;
 
-	py = y - 1;
-	ty = 0;
-	px = -1;
-	while ((ty != py) && (px != x))
+	ipo = sqrt((pow(inf->colums - 1, 2) + pow(inf->rows - 1, 2)));
+	may = inf->width / ipo;
+	might = inf->height / ipo;
+	inf->scaling = fmin(may, might);
+	inf->center_x = (inf->width - (inf->scaling * (inf->colums - 1))) / 2;
+	inf->center_y = (inf->height - (inf->scaling * (inf->rows - 1))) / 2;
+}
+ *
+ *
+ * */
+
+/*
+ *void	int_to_isometric_pixel(t_date *info, t_point **head)
+{
+	t_point	*current;
+
+	current = *head;
+	while (current != NULL)
 	{
-		if (px == fdf->width)
-		{
-			px = -1;
-			ty++;
-		}
-		tmp = tmp->next;
-		px++;
+		current->x_pixel = (info->center_x) + ((current->x_map - current->y_map)
+				* cos(PI / 6) * info->scaling);
+		current->y_pixel = (info->center_y) - (current->z_map * sin(PI / 6)
+				* info->scaling) + ((current->x_map + current->y_map)
+				* sin(PI / 6) * info->scaling);
+		current = current->next;
 	}
-	return (tmp);
 }
-
-static int	fdf_ordinate_connection(t_fdf *fdf, int x, int y)
-{
-	t_map	*tmp;
-
-	tmp = fdf->lst;
-	tmp = fdf_find_correct_point(fdf, x, y, tmp);
-	fdf->x0 = tmp->x;
-	fdf->y0 = tmp->y;
-	fdf->x1 = fdf->cur->x;
-	fdf->y1 = fdf->cur->y;
-	fdf->imap = fdf_bresenham(fdf, fdf->x1, fdf->y1);
-	return (fdf->imap);
-}
-
-static int	fdf_axis_connection(t_fdf *fdf)
-{
-	t_map	*tmp;
-
-	tmp = fdf->lst;
-	while (tmp && (tmp->next != fdf->cur))
-		tmp = tmp->next;
-	fdf->x0 = tmp->x;
-	fdf->y0 = tmp->y;
-	fdf->x1 = fdf->cur->x;
-	fdf->y1 = fdf->cur->y;
-	fdf->imap = fdf_bresenham(fdf, fdf->x1, fdf->y1);
-	return (fdf->imap);
-}
-
-static int	fdf_project_point(t_fdf *fdf)
-{
-	int	px;
-	int	py;
-
-	px = (int)((fdf->cur->x - fdf->cur->y) * cos(fdf->angle));
-	py = (int)((fdf->cur->x + fdf->cur->y) * sin(fdf->angle) - fdf->cur->z);
-	fdf->cur->x = px;
-	fdf->cur->y = py;
-	return (0);
-}
+ *
+ */
 
 int	fdf_draw_model(t_fdf *fdf, int x, int y)
 {
-	fdf->imap = fdf_project_point(fdf);
-	if (x != 0)
-		fdf->imap = fdf_axis_connection(fdf);
-	fdf->imap = fdf_clean_line_parameters(fdf);
-	if (y != 0)
-		fdf->imap = fdf_ordinate_connection(fdf, x, y);
-	fdf->imap = fdf_clean_line_parameters(fdf);
+	(void)x;
+	(void)y;
+	fdf_put_pixel(fdf, fdf->cur->x, fdf->cur->y, WHITE);
 	return (fdf->imap);
 }

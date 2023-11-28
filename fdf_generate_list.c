@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 10:52:16 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/28 11:26:55 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:20:01 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -42,14 +42,28 @@ static int	fdf_set_point(t_fdf *fdf, int x, int y)
 	if (y == 0)
 		fdf->cur->y = STARTY;
 	else
-		fdf->cur->y = y * fdf->dsty;
+		fdf->cur->y = STARTY + (y * fdf->dsty);
 	if (x == 0)
+	{
 		fdf->cur->x = STARTX;
+		fdf->prevx = fdf->cur->x;
+	}
 	else
-		fdf->cur->x = x * fdf->dstx;
+	{
+		fdf->cur->x = fdf->prevx + fdf->dstx;
+		fdf->prevx = fdf->cur->x;
+	}
 	fdf->cur->z = (fdf->map)[y][x];
 	return (0);
 }
+/*
+static int	fdf_set_point(t_fdf *fdf, int x, int y)
+{
+	fdf->cur->y = y;
+	fdf->cur->x = x;
+	fdf->cur->z = (fdf->map)[y][x];
+	return (0);
+}*/
 
 int	fdf_generate_list(t_fdf *fdf, int x, int y)
 {

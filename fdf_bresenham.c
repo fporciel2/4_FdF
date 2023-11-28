@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:48:59 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/28 09:32:07 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/28 15:22:55 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -35,7 +35,8 @@ static int	fdf_draw_line_loop(t_fdf *fdf, int x1, int y1)
 {
 	while (1)
 	{
-		fdf_put_pixel(fdf, fdf->x0, fdf->y0, WHITE);
+		if ((fdf->x0 > 0) && (fdf->x0 < WINX) && (fdf->y0 > 0) && (fdf->y0 < WINY))
+			fdf_put_pixel(fdf, fdf->x0, fdf->y0, WHITE);
 		if ((fdf->x0 == x1) && (fdf->y0 == y1))
 			break ;
 		fdf->e2 = 2 * fdf->e;
