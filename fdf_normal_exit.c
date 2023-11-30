@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 11:04:31 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/26 14:25:38 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 09:59:33 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -85,7 +85,6 @@ int	fdf_normal_exit(t_fdf *fdf)
 	int	stat;
 
 	stat = fdf_free_map(fdf);
-	stat = fdf_cancel_list(fdf);
 	stat = fdf_memory_cleaner(fdf);
 	return (exit(EXIT_SUCCESS), stat);
 }

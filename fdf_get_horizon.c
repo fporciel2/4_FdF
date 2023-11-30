@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_errors.c                                       :+:      :+:    :+:   */
+/*   fdf_get_horizon.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 10:44:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 09:59:50 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/30 10:20:30 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/30 11:00:34 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,23 +31,48 @@
 
 #include "fdf.h"
 
-int	fdf_invalid_argument_error(void)
+int	fdf_get_horizon_x0(t_fdf *fdf, int x, int y)
 {
-	return (perror(strerror(EINVAL)), 0);
+	int	xiso;
+
+	if (x == 0)
+		return (0);
+	xiso = (int)(((sqrt(2) / 2) * (fdf_get_orth_x(fdf, (x - 1)) - MIDX))
+			- ((sqrt(2) / 2) * (fdf_get_orth_y(fdf, y) - MIDY)) + MIDX);
+	return (xiso);
 }
 
-int	fdf_nonexistent_file_error(void)
+int	fdf_get_horizon_y0(t_fdf *fdf, int x, int y)
 {
-	return (perror(strerror(errno)), exit(EXIT_FAILURE), 0);
+	int	yiso;
+
+	if (x == 0)
+		return (0);
+	yiso = (int)(((sqrt(6) / 6) * (fdf_get_orth_x(fdf, (x - 1)) - MIDX))
+			- ((sqrt(6) / 6) * (fdf_get_orth_y(fdf, y) - MIDY))
+			- (((sqrt(6) / 3) * fdf->map[y][x - 1]) + MIDY));
+	return (yiso);
 }
 
-int	fdf_generic_error(t_fdf *fdf)
+int	fdf_get_horizon_x1(t_fdf *fdf, int x, int y)
 {
-	int	ret;
+	int	xiso;
 
-	if (fdf == NULL)
-		return (perror(strerror(errno)), exit(EXIT_FAILURE), 0);
-	ret = fdf_free_map(fdf);
-	ret = fdf_memory_cleaner(fdf);
-	return (perror(strerror(errno)), exit(EXIT_FAILURE), ret);
+	if (x == 0)
+		return (0);
+	xiso = (int)(((sqrt(2) / 2) * (fdf_get_orth_x(fdf, x) - MIDX))
+			- ((sqrt(2) / 2) * (fdf_get_orth_y(fdf, y) - MIDY)) + MIDX);
+	return (xiso);
+}
+
+int	fdf_get_horizon_y1(t_fdf *fdf, int x, int y)
+{
+	int	yiso;
+
+	if (x == 0)
+		return (0);
+	yiso = (int)(((sqrt(6) / 6) * (fdf_get_orth_x(fdf, x) - MIDX))
+			- ((sqrt(6) / 6) * (fdf_get_orth_y(fdf, y) - MIDY))
+			- (((sqrt(6) / 3) * fdf->map[y][x]) + MIDY));
+	return (yiso);
 }

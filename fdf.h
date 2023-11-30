@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/28 14:16:33 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 11:07:41 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -68,14 +68,6 @@
 
 /*fdf->dsty(fdf->dstx) == (ENDY(ENDX) - STARTY(STARTX)) / fdf->height(fdf->width)*/
 
-typedef struct s_map
-{
-	int				x;
-	int				y;
-	int				z;
-	struct s_map	*next;
-}					t_map;
-
 typedef struct s_fdf
 {
 	void			*dsp;
@@ -113,8 +105,6 @@ typedef struct s_fdf
 	int				prevx;
 	int				prevy;
 	float			angle;
-	struct s_map	*lst;
-	struct s_map	*cur;
 }					t_fdf;
 
 int		fdf_invalid_argument_error(void);
@@ -134,9 +124,16 @@ int		fdf_absval(int a);
 void	fdf_put_pixel(t_fdf *fdf, int x, int y, int color);
 int		fdf_bresenham(t_fdf *fdf, int x1, int y1);
 int		fdf_generate_model(t_fdf *fdf);
-int		fdf_generate_list(t_fdf *fdf, int x, int y);
-int		fdf_draw_model(t_fdf *fdf, int x, int y);
-int		fdf_cancel_list(t_fdf *fdf);
 int		fdf_clean_line_parameters(t_fdf *fdf);
+int		fdf_get_horizon_x0(t_fdf *fdf, int x, int y);
+int		fdf_get_horizon_y0(t_fdf *fdf, int x, int y);
+int		fdf_get_horizon_x1(t_fdf *fdf, int x, int y);
+int		fdf_get_horizon_y1(t_fdf *fdf, int x, int y);
+int		fdf_get_vert_x0(t_fdf *fdf, int x, int y);
+int		fdf_get_vert_y0(t_fdf *fdf, int x, int y);
+int		fdf_get_vert_x1(t_fdf *fdf, int x, int y);
+int		fdf_get_vert_y1(t_fdf *fdf, int x, int y);
+int		fdf_get_orth_x(t_fdf *fdf, int x);
+int		fdf_get_orth_y(t_fdf *fdf, int y);
 
 #endif

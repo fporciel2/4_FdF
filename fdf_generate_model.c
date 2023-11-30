@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_errors.c                                       :+:      :+:    :+:   */
+/*   fdf_generate_model.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 10:44:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 09:59:50 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/30 10:01:25 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/30 10:42:11 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,23 +31,42 @@
 
 #include "fdf.h"
 
-int	fdf_invalid_argument_error(void)
+static int	fdf_vertical_line(t_fdf *fdf, int x, int y)
 {
-	return (perror(strerror(EINVAL)), 0);
+	fdf->x0 = fdf_get_vert_x0(fdf, x, y);
+	fdf->y0 = fdf_get_vert_y0(fdf, x, y);
+	fdf->x1 = fdf_get_vert_x1(fdf, x, y);
+	fdf->y1 = fdf_get_vert_y1(fdf, x, y);
+	if (y != 0)
+		fdf->imap = fdf_bresenham(fdf, fdf->x1, fdf->y1);
+	fdf->imap = fdf_clean_line_parameters(fdf);
+	return (fdf->imap);
 }
 
-int	fdf_nonexistent_file_error(void)
+int	fdf_generate_model(t_fdf *fdf)
 {
-	return (perror(strerror(errno)), exit(EXIT_FAILURE), 0);
-}
+	int	x;
+	int	y;
 
-int	fdf_generic_error(t_fdf *fdf)
-{
-	int	ret;
-
-	if (fdf == NULL)
-		return (perror(strerror(errno)), exit(EXIT_FAILURE), 0);
-	ret = fdf_free_map(fdf);
-	ret = fdf_memory_cleaner(fdf);
-	return (perror(strerror(errno)), exit(EXIT_FAILURE), ret);
+	fdf->dsty = (ENDY - STARTY) / fdf->height;
+	fdf->dstx = (ENDX - STARTX) / fdf->width;
+	y = 0;
+	while (y < fdf->height)
+	{
+		x = 0;
+		while (x < fdf->width)
+		{
+			fdf->x0 = fdf_get_horizon_x0(fdf, x, y);
+			fdf->y0 = fdf_get_horizon_y0(fdf, x, y);
+			fdf->x1 = fdf_get_horizon_x1(fdf, x, y);
+			fdf->y1 = fdf_get_horizon_y1(fdf, x, y);
+			if (x != 0)
+				fdf->imap = fdf_bresenham(fdf, fdf->x1, fdf->y1);
+			fdf->imap = fdf_clean_line_parameters(fdf);
+			fdf->imap = fdf_vertical_line(fdf, x, y);
+			x++;
+		}
+		y++;
+	}
+	return (fdf->imap);
 }

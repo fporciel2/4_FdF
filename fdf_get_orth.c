@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_errors.c                                       :+:      :+:    :+:   */
+/*   fdf_get_orth.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 10:44:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 09:59:50 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/30 11:11:30 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/30 11:15:05 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,23 +31,12 @@
 
 #include "fdf.h"
 
-int	fdf_invalid_argument_error(void)
+int	fdf_get_orth_x(t_fdf *fdf, int x)
 {
-	return (perror(strerror(EINVAL)), 0);
+	return (STARTX + (fdf->dstx * x));
 }
 
-int	fdf_nonexistent_file_error(void)
+int	fdf_get_orth_y(t_fdf *fdf, int y)
 {
-	return (perror(strerror(errno)), exit(EXIT_FAILURE), 0);
-}
-
-int	fdf_generic_error(t_fdf *fdf)
-{
-	int	ret;
-
-	if (fdf == NULL)
-		return (perror(strerror(errno)), exit(EXIT_FAILURE), 0);
-	ret = fdf_free_map(fdf);
-	ret = fdf_memory_cleaner(fdf);
-	return (perror(strerror(errno)), exit(EXIT_FAILURE), ret);
+	return (STARTY + (fdf->dsty * y));
 }

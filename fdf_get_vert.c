@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_cancel_list.c                                  :+:      :+:    :+:   */
+/*   fdf_get_vert.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/26 14:09:51 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/28 10:16:35 by fporciel         ###   ########.fr       */
+/*   Created: 2023/11/30 11:01:49 by fporciel          #+#    #+#             */
+/*   Updated: 2023/11/30 11:04:21 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,22 +31,48 @@
 
 #include "fdf.h"
 
-int	fdf_cancel_list(t_fdf *fdf)
+int	fdf_get_vert_x0(t_fdf *fdf, int x, int y)
 {
-	t_map	*swap;
+	int	xiso;
 
-	while (fdf->lst && fdf->cur)
-	{
-		if (fdf->lst == fdf->cur)
-		{
-			free(fdf->lst);
-			fdf->lst = NULL;
-			fdf->cur = NULL;
-			return (0);
-		}
-		swap = fdf->lst->next;
-		free(fdf->lst);
-		fdf->lst = swap;
-	}
-	return (0);
+	if (y == 0)
+		return (0);
+	xiso = (int)(((sqrt(2) / 2) * (fdf_get_orth_x(fdf, x) - MIDX))
+			- ((sqrt(2) / 2) * (fdf_get_orth_y(fdf, (y - 1)) - MIDY)) + MIDX);
+	return (xiso);
+}
+
+int	fdf_get_vert_y0(t_fdf *fdf, int x, int y)
+{
+	int	yiso;
+
+	if (y == 0)
+		return (0);
+	yiso = (int)(((sqrt(6) / 6) * (fdf_get_orth_x(fdf, x) - MIDX))
+			- ((sqrt(6) / 6) * (fdf_get_orth_y(fdf, (y - 1)) - MIDY))
+			- (((sqrt(6) / 3) * fdf->map[y - 1][x]) + MIDY));
+	return (yiso);
+}
+
+int	fdf_get_vert_x1(t_fdf *fdf, int x, int y)
+{
+	int	xiso;
+
+	if (y == 0)
+		return (0);
+	xiso = (int)(((sqrt(2) / 2) * (fdf_get_orth_x(fdf, x) - MIDX))
+			- ((sqrt(2) / 2) * (fdf_get_orth_y(fdf, y) - MIDY)) + MIDX);
+	return (xiso);
+}
+
+int	fdf_get_vert_y1(t_fdf *fdf, int x, int y)
+{
+	int	yiso;
+
+	if (y == 0)
+		return (0);
+	yiso = (int)(((sqrt(6) / 6) * (fdf_get_orth_x(fdf, x) - MIDX))
+			- ((sqrt(6) / 6) * (fdf_get_orth_y(fdf, y) - MIDY))
+			- (((sqrt(6) / 3) * fdf->map[y][x]) + MIDY));
+	return (yiso);
 }
