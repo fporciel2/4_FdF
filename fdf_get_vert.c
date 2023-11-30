@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:01:49 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 19:45:10 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 19:49:17 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -41,7 +41,6 @@ int	fdf_get_vert_x0(t_fdf *fdf, int x, int y)
 		return (0);
 	orthx = fdf_get_orth_x(fdf, x);
 	orthy = fdf_get_orth_y(fdf, (y - 1));
-	zfact = (fdf->map)[y - 1][x];
 	xiso = (int)((orthx - orthy) * cos(0.5));
 	xiso += MIDX - fdf->isocx;
 	return (xiso);
