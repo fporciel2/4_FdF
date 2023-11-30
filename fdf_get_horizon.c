@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 10:20:30 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 19:06:31 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 19:24:50 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -41,7 +41,8 @@ int	fdf_get_horizon_x0(t_fdf *fdf, int x, int y)
 		return (0);
 	orthx = fdf_get_orth_x(fdf, (x - 1));
 	orthy = fdf_get_orth_y(fdf, y);
-	xiso = (int)((orthx - orthy) * cos(0.8) + MIDX);
+	xiso = (int)((orthx - orthy) * cos(0.5));
+	xiso += MIDX - fdf->isocx;
 	return (xiso);
 }
 
@@ -57,7 +58,8 @@ int	fdf_get_horizon_y0(t_fdf *fdf, int x, int y)
 	orthx = fdf_get_orth_x(fdf, (x - 1));
 	orthy = fdf_get_orth_y(fdf, y);
 	zfact = (fdf->map)[y][x - 1];
-	yiso = (int)((orthx + orthy) * sin(0.8) - zfact + MIDY);
+	yiso = (int)((orthx + orthy) * sin(0.5) - zfact);
+	yiso += MIDY - fdf->isocy;
 	return (yiso);
 }
 
@@ -71,7 +73,8 @@ int	fdf_get_horizon_x1(t_fdf *fdf, int x, int y)
 		return (0);
 	orthx = fdf_get_orth_x(fdf, x);
 	orthy = fdf_get_orth_y(fdf, y);
-	xiso = (int)((orthx - orthy) * cos(0.8) + MIDX);
+	xiso = (int)((orthx - orthy) * cos(0.5));
+	xiso += MIDX - fdf->isocx;
 	return (xiso);
 }
 
@@ -87,6 +90,7 @@ int	fdf_get_horizon_y1(t_fdf *fdf, int x, int y)
 	orthx = fdf_get_orth_x(fdf, x);
 	orthy = fdf_get_orth_y(fdf, y);
 	zfact = (fdf->map)[y][x];
-	yiso = (int)((orthx + orthy) * sin(0.8) - zfact + MIDY);
+	yiso = (int)((orthx + orthy) * sin(0.5) - zfact);
+	yiso += MIDY - fdf->isocy;
 	return (yiso);
 }

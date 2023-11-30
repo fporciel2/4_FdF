@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 11:07:41 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 19:15:07 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -104,6 +104,8 @@ typedef struct s_fdf
 	int				e2;
 	int				prevx;
 	int				prevy;
+	int				isocx;
+	int				isocy;
 	float			angle;
 }					t_fdf;
 

@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:57:57 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 11:41:09 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 19:14:33 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,6 +31,13 @@
 
 #include "fdf.h"
 
+static int	fdf_iso_center(t_fdf *fdf)
+{
+	fdf->isocx = (int)((MIDX - MIDY) * cos(0.8));
+	fdf->isocy = (int)((MIDX + MIDY) * sin(0.8));
+	return (0);
+}
+
 static int	fdf_generate_image(t_fdf *fdf)
 {
 	fdf->img = mlx_new_image(fdf->dsp, IMGX, IMGY);
@@ -40,6 +47,7 @@ static int	fdf_generate_image(t_fdf *fdf)
 			&(fdf->row), &(fdf->endian));
 	if (fdf->data == NULL)
 		fdf->imap = fdf_generic_error(fdf);
+	fdf->imap = fdf_iso_center(fdf);
 	fdf->imap = fdf_generate_model(fdf);
 	mlx_put_image_to_window(fdf->dsp, fdf->win, fdf->img, 0, 0);
 	return (fdf->imap);
