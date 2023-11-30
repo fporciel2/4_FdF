@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 14:57:57 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 19:39:37 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 19:48:10 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -35,6 +35,7 @@ static int	fdf_iso_center(t_fdf *fdf)
 {
 	fdf->isocx = (int)((MIDX - MIDY) * cos(0.5));
 	fdf->isocy = (int)((MIDX + MIDY) * sin(0.5));
+	fdf->color = WHITE;
 	return (0);
 }
 
