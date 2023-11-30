@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:39:46 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/23 11:44:32 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 20:26:32 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -37,4 +37,26 @@ void	fdf_put_pixel(t_fdf *fdf, int x, int y, int color)
 
 	dst = fdf->data  + (y * fdf->row + x * (fdf->bits / 8));
 	*(unsigned int*)dst = color;
+}
+
+void	fdf_truncate(char **str, t_fdf *fdf)
+{
+	char	*ptr;
+	int		i;
+
+	i = 0;
+	while (ft_isdigit((*str)[i]))
+		i++;
+	ptr = (char *)malloc(sizeof(char) * (i + 1));
+	if (ptr == NULL)
+		fdf_generic_error(fdf);
+	i = 0;
+	while (ft_isdigit((*str)[i]))
+	{
+		ptr[i] = (*str)[i];
+		i++;
+	}
+	ptr[i] = 0;
+	free(*str);
+	*str = ptr;
 }
