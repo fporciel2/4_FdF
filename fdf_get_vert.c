@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:01:49 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 11:04:21 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:17:15 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -34,45 +34,59 @@
 int	fdf_get_vert_x0(t_fdf *fdf, int x, int y)
 {
 	int	xiso;
+	int	orthx;
+	int	orthy;
 
 	if (y == 0)
 		return (0);
-	xiso = (int)(((sqrt(2) / 2) * (fdf_get_orth_x(fdf, x) - MIDX))
-			- ((sqrt(2) / 2) * (fdf_get_orth_y(fdf, (y - 1)) - MIDY)) + MIDX);
+	orthx = fdf_get_orth_x(fdf, x);
+	orthy = fdf_get_orth_y(fdf, (y - 1));
+	xiso = (int)((((orthx - MIDX) - (orthy - MIDY)) * cos(0.8)) + MIDX);
 	return (xiso);
 }
 
 int	fdf_get_vert_y0(t_fdf *fdf, int x, int y)
 {
 	int	yiso;
+	int	orthx;
+	int	orthy;
+	int	zfact;
 
 	if (y == 0)
 		return (0);
-	yiso = (int)(((sqrt(6) / 6) * (fdf_get_orth_x(fdf, x) - MIDX))
-			- ((sqrt(6) / 6) * (fdf_get_orth_y(fdf, (y - 1)) - MIDY))
-			- (((sqrt(6) / 3) * fdf->map[y - 1][x]) + MIDY));
+	orthx = fdf_get_orth_x(fdf, x);
+	orthy = fdf_get_orth_y(fdf, (y - 1));
+	zfact = (fdf->map)[y - 1][x];
+	yiso = (int)((((orthx - MIDX) + (orthy - MIDY)) * sin(0.8)) - zfact - MIDY);
 	return (yiso);
 }
 
 int	fdf_get_vert_x1(t_fdf *fdf, int x, int y)
 {
 	int	xiso;
+	int	orthx;
+	int	orthy;
 
 	if (y == 0)
 		return (0);
-	xiso = (int)(((sqrt(2) / 2) * (fdf_get_orth_x(fdf, x) - MIDX))
-			- ((sqrt(2) / 2) * (fdf_get_orth_y(fdf, y) - MIDY)) + MIDX);
+	orthx = fdf_get_orth_x(fdf, x);
+	orthy = fdf_get_orth_y(fdf, y);
+	xiso = (int)((((orthx - MIDX) - (orthy - MIDY)) * cos(0.8)) + MIDX);
 	return (xiso);
 }
 
 int	fdf_get_vert_y1(t_fdf *fdf, int x, int y)
 {
 	int	yiso;
+	int	orthx;
+	int	orthy;
+	int	zfact;
 
 	if (y == 0)
 		return (0);
-	yiso = (int)(((sqrt(6) / 6) * (fdf_get_orth_x(fdf, x) - MIDX))
-			- ((sqrt(6) / 6) * (fdf_get_orth_y(fdf, y) - MIDY))
-			- (((sqrt(6) / 3) * fdf->map[y][x]) + MIDY));
+	orthx = fdf_get_orth_x(fdf, x);
+	orthy = fdf_get_orth_y(fdf, y);
+	zfact = (fdf->map)[y][x];
+	yiso = (int)((((orthx - MIDX) + (orthy - MIDY)) * sin(0.8)) - zfact - MIDY);
 	return (yiso);
 }

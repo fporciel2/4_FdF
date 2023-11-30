@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 10:20:30 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 11:00:34 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:02:10 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -33,46 +33,24 @@
 
 int	fdf_get_horizon_x0(t_fdf *fdf, int x, int y)
 {
-	int	xiso;
-
 	if (x == 0)
 		return (0);
-	xiso = (int)(((sqrt(2) / 2) * (fdf_get_orth_x(fdf, (x - 1)) - MIDX))
-			- ((sqrt(2) / 2) * (fdf_get_orth_y(fdf, y) - MIDY)) + MIDX);
-	return (xiso);
 }
 
 int	fdf_get_horizon_y0(t_fdf *fdf, int x, int y)
 {
-	int	yiso;
-
 	if (x == 0)
 		return (0);
-	yiso = (int)(((sqrt(6) / 6) * (fdf_get_orth_x(fdf, (x - 1)) - MIDX))
-			- ((sqrt(6) / 6) * (fdf_get_orth_y(fdf, y) - MIDY))
-			- (((sqrt(6) / 3) * fdf->map[y][x - 1]) + MIDY));
-	return (yiso);
 }
 
 int	fdf_get_horizon_x1(t_fdf *fdf, int x, int y)
 {
-	int	xiso;
-
 	if (x == 0)
 		return (0);
-	xiso = (int)(((sqrt(2) / 2) * (fdf_get_orth_x(fdf, x) - MIDX))
-			- ((sqrt(2) / 2) * (fdf_get_orth_y(fdf, y) - MIDY)) + MIDX);
-	return (xiso);
 }
 
 int	fdf_get_horizon_y1(t_fdf *fdf, int x, int y)
 {
-	int	yiso;
-
 	if (x == 0)
 		return (0);
-	yiso = (int)(((sqrt(6) / 6) * (fdf_get_orth_x(fdf, x) - MIDX))
-			- ((sqrt(6) / 6) * (fdf_get_orth_y(fdf, y) - MIDY))
-			- (((sqrt(6) / 3) * fdf->map[y][x]) + MIDY));
-	return (yiso);
 }
