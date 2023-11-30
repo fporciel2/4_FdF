@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 13:52:15 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 20:23:01 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 20:30:05 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -75,7 +75,6 @@ static int	fdf_split_line_and_fill(t_fdf *fdf, char *line, int result)
 	(fdf->map)[fdf->c] = fdf_count_split_and_allocate(fdf);
 	while ((fdf->spline)[fdf->i] != NULL)
 	{
-		fdf_truncate(&((fdf->spline)[fdf->i]), fdf);
 		(fdf->map)[fdf->c][fdf->i] = ft_atoi((fdf->spline)[fdf->i]);
 		(fdf->i)++;
 	}
