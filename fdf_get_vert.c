@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 11:01:49 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 19:25:23 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 19:35:45 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -36,13 +36,21 @@ int	fdf_get_vert_x0(t_fdf *fdf, int x, int y)
 	int	xiso;
 	int	orthx;
 	int	orthy;
+	int	zfact;
 
 	if (y == 0)
 		return (0);
 	orthx = fdf_get_orth_x(fdf, x);
 	orthy = fdf_get_orth_y(fdf, (y - 1));
+	zfact = (fdf->map)[y - 1][x];
 	xiso = (int)((orthx - orthy) * cos(0.5));
 	xiso += MIDX - fdf->isocx;
+	if (zfact > 0)
+		fdf->color = RED;
+	else if (zfact < 0)
+		fdf->color = BLUE;
+	else
+		fdf->color = WHITE;
 	return (xiso);
 }
 
@@ -60,6 +68,12 @@ int	fdf_get_vert_y0(t_fdf *fdf, int x, int y)
 	zfact = (fdf->map)[y - 1][x];
 	yiso = (int)((orthx + orthy) * sin(0.5) - zfact);
 	yiso += MIDY - fdf->isocy;
+	if (zfact > 0)
+		fdf->color = RED;
+	else if (zfact < 0)
+		fdf->color = BLUE;
+	else
+		fdf->color = WHITE;
 	return (yiso);
 }
 
@@ -68,13 +82,21 @@ int	fdf_get_vert_x1(t_fdf *fdf, int x, int y)
 	int	xiso;
 	int	orthx;
 	int	orthy;
+	int	zfact;
 
 	if (y == 0)
 		return (0);
 	orthx = fdf_get_orth_x(fdf, x);
 	orthy = fdf_get_orth_y(fdf, y);
+	zfact = (fdf->map)[y][x];
 	xiso = (int)((orthx - orthy) * cos(0.5));
 	xiso += MIDX - fdf->isocx;
+	if (zfact > 0)
+		fdf->color = RED;
+	else if (zfact < 0)
+		fdf->color = BLUE;
+	else
+		fdf->color = WHITE;
 	return (xiso);
 }
 
@@ -92,5 +114,11 @@ int	fdf_get_vert_y1(t_fdf *fdf, int x, int y)
 	zfact = (fdf->map)[y][x];
 	yiso = (int)((orthx + orthy) * sin(0.5) - zfact);
 	yiso += MIDY - fdf->isocy;
+	if (zfact > 0)
+		fdf->color = RED;
+	else if (zfact < 0)
+		fdf->color = BLUE;
+	else
+		fdf->color = WHITE;
 	return (yiso);
 }

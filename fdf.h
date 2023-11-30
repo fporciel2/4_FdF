@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 19:15:07 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/11/30 19:30:22 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -65,6 +65,7 @@
 
 # define WHITE	0xffffff
 # define RED	0xe80c0c
+# define BLUE	0x0000FF
 
 /*fdf->dsty(fdf->dstx) == (ENDY(ENDX) - STARTY(STARTX)) / fdf->height(fdf->width)*/
 
@@ -106,6 +107,7 @@ typedef struct s_fdf
 	int				prevy;
 	int				isocx;
 	int				isocy;
+	int				color;
 	float			angle;
 }					t_fdf;
 
