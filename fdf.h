@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 20:29:33 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/12/01 09:50:31 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -139,5 +139,6 @@ int		fdf_get_vert_x1(t_fdf *fdf, int x, int y);
 int		fdf_get_vert_y1(t_fdf *fdf, int x, int y);
 int		fdf_get_orth_x(t_fdf *fdf, int x);
 int		fdf_get_orth_y(t_fdf *fdf, int y);
+char	**fdf_split(const char *str);
 
 #endif
