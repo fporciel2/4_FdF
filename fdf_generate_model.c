@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 10:01:25 by fporciel          #+#    #+#             */
-/*   Updated: 2023/12/02 11:47:43 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/12/02 14:30:51 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -36,7 +36,8 @@ static int	fdf_get_vert_color(t_fdf *fdf, int x, int y)
 	int	z0;
 	int	z1;
 
-	if ((y == 0) || (((fdf->map)[y][x] == 0) && ((fdf->map)[y - 1][x] == 0)))
+	if ((y == 0) || (((fdf->map)[y][x] >= 0) && ((fdf->map)[y - 1][x] >= 0)
+			&& ((fdf->map)[y][x] < 10) && ((fdf->map)[y - 1][x] < 10)))
 		return (WHITE);
 	z0 = (fdf->map)[y - 1][x];
 	z1 = (fdf->map)[y][x];
@@ -59,7 +60,8 @@ static int	fdf_get_horizon_color(t_fdf *fdf, int x, int y)
 	int	z0;
 	int	z1;
 
-	if ((x == 0) || (((fdf->map)[y][x] == 0) && ((fdf->map)[y][x - 1] == 0)))
+	if ((x == 0) || (((fdf->map)[y][x] == 0) && ((fdf->map)[y][x - 1] == 0)
+			&& ((fdf->map)[y][x] < 10) && ((fdf->map)[y][x - 1] < 10)))
 		return (WHITE);
 	z0 = (fdf->map)[y][x - 1];
 	z1 = (fdf->map)[y][x];
