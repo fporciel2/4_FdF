@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 11:42:52 by fporciel          #+#    #+#             */
-/*   Updated: 2023/12/02 11:00:23 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:07:52 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -62,7 +62,8 @@ static void	fdf_get_width(t_fdf *fdf)
 	{
 		if (!ft_isdigit((fdf->line)[i]))
 		{
-			width++;
+			if (i != 0)
+				width++;
 			i = fdf_slide_point_descriptor(fdf->line, i);
 		}
 		if ((fdf->line)[i] != 0)
