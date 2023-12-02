@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 10:01:25 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 10:42:11 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:47:43 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -31,12 +31,59 @@
 
 #include "fdf.h"
 
+static int	fdf_get_vert_color(t_fdf *fdf, int x, int y)
+{
+	int	z0;
+	int	z1;
+
+	if ((y == 0) || (((fdf->map)[y][x] == 0) && ((fdf->map)[y - 1][x] == 0)))
+		return (WHITE);
+	z0 = (fdf->map)[y - 1][x];
+	z1 = (fdf->map)[y][x];
+	if ((z0 < 0) && (z1 == 0))
+		return (CYAN);
+	else if ((z0 < 0) && (z1 < 0) && (z1 > z0))
+		return (AZURE);
+	else if ((z0 < 0) && (z1 > 0))
+		return (SUPERAZ);
+	else if (((z0 < 0) && (z1 < z0)) || ((z0 == 0) && (z1 < 0)))
+		return (BLUE);
+	else if (((z0 == 0) && (z1 > 0)) || ((z0 > 0) && (z1 > z0)))
+		return (RED);
+	else
+		return (BRICK_RED);
+}
+
+static int	fdf_get_horizon_color(t_fdf *fdf, int x, int y)
+{
+	int	z0;
+	int	z1;
+
+	if ((x == 0) || (((fdf->map)[y][x] == 0) && ((fdf->map)[y][x - 1] == 0)))
+		return (WHITE);
+	z0 = (fdf->map)[y][x - 1];
+	z1 = (fdf->map)[y][x];
+	if ((z0 < 0) && (z1 == 0))
+		return (CYAN);
+	else if ((z0 < 0) && (z1 < 0) && (z1 > z0))
+		return (AZURE);
+	else if ((z0 < 0) && (z1 > 0))
+		return (SUPERAZ);
+	else if (((z0 < 0) && (z1 < z0)) || ((z0 == 0) && (z1 < 0)))
+		return (BLUE);
+	else if (((z0 == 0) && (z1 > 0)) || ((z0 > 0) && (z1 > z0)))
+		return (RED);
+	else
+		return (BRICK_RED);
+}
+
 static int	fdf_vertical_line(t_fdf *fdf, int x, int y)
 {
 	fdf->x0 = fdf_get_vert_x0(fdf, x, y);
 	fdf->y0 = fdf_get_vert_y0(fdf, x, y);
 	fdf->x1 = fdf_get_vert_x1(fdf, x, y);
 	fdf->y1 = fdf_get_vert_y1(fdf, x, y);
+	fdf->color = fdf_get_vert_color(fdf, x, y);
 	if (y != 0)
 		fdf->imap = fdf_bresenham(fdf, fdf->x1, fdf->y1);
 	fdf->imap = fdf_clean_line_parameters(fdf);
@@ -48,8 +95,6 @@ int	fdf_generate_model(t_fdf *fdf)
 	int	x;
 	int	y;
 
-	fdf->dsty = (ENDY - STARTY) / fdf->height;
-	fdf->dstx = (ENDX - STARTX) / fdf->width;
 	y = 0;
 	while (y < fdf->height)
 	{
@@ -60,6 +105,7 @@ int	fdf_generate_model(t_fdf *fdf)
 			fdf->y0 = fdf_get_horizon_y0(fdf, x, y);
 			fdf->x1 = fdf_get_horizon_x1(fdf, x, y);
 			fdf->y1 = fdf_get_horizon_y1(fdf, x, y);
+			fdf->color = fdf_get_horizon_color(fdf, x, y);
 			if (x != 0)
 				fdf->imap = fdf_bresenham(fdf, fdf->x1, fdf->y1);
 			fdf->imap = fdf_clean_line_parameters(fdf);

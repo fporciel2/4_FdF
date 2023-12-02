@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/12/02 10:32:15 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:40:19 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -63,9 +63,22 @@
 # define ENDX	1440
 # define ENDY	810
 
-# define WHITE	0xffffff
-# define RED	0xe80c0c
-# define BLUE	0x0000FF
+# define WHITE		0xffffff
+# define RED		0xe80c0c
+# define BLUE		0x0000FF
+# define GREEN		0x00FF00
+# define YELLOW 	0xFFFF00
+# define MAGENTA	0xFF00FF
+# define CYAN 		0x00FFFF
+# define FUCSIA 	0xff255c
+# define AZURE		0x1B8EFA
+# define SUPERAZ	0x0000FF
+# define CARBON		0x151515
+# define DISCO		0x9A1F6A
+# define BRICK_RED	0xC2294E
+# define FLAMINGO	0xEC4B27
+# define JAFFA		0xEF8633
+# define SAFFRON	0xF3AF3D
 
 /*fdf->dsty(fdf->dstx) == (ENDY(ENDX) - STARTY(STARTX)) / fdf->height(fdf->width)*/
 
