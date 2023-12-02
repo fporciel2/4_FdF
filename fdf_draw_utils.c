@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:39:46 by fporciel          #+#    #+#             */
-/*   Updated: 2023/11/30 20:29:51 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/12/02 14:24:45 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -35,6 +35,6 @@ void	fdf_put_pixel(t_fdf *fdf, int x, int y, int color)
 {
 	char	*dst;
 
-	dst = fdf->data  + (y * fdf->row + x * (fdf->bits / 8));
-	*(unsigned int*)dst = color;
+	dst = fdf->data + (y * fdf->row + x * (fdf->bits / 8));
+	*(unsigned int *)dst = color;
 }

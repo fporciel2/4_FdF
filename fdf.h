@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/12/02 11:40:19 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/12/02 14:23:49 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -79,8 +79,6 @@
 # define FLAMINGO	0xEC4B27
 # define JAFFA		0xEF8633
 # define SAFFRON	0xF3AF3D
-
-/*fdf->dsty(fdf->dstx) == (ENDY(ENDX) - STARTY(STARTX)) / fdf->height(fdf->width)*/
 
 typedef struct s_fdf
 {
