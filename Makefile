@@ -6,7 +6,7 @@
 #    By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/14 09:12:59 by fporciel          #+#    #+#              #
-#    Updated: 2023/11/21 10:01:57 by fporciel         ###   ########.fr        #
+#    Updated: 2023/12/02 09:57:16 by fporciel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 # FdF is a general-purpose Computer-Aided Design (CAD) program meant to analyze
@@ -58,7 +58,7 @@ BSRCS := $(wildcard fdf*bonus.c)
 OBJS := $(patsubst %.c, %.o, $(SRCS))
 BOBJS := $(patsubst %.c, %.o, $(BSRCS))
 CC := gcc
-CFLAGS := -std=c17 -pedantic -Wall -Wextra -Werror -O3 -march=native -g \
+CFLAGS := -std=c17 -pedantic-errors -Wall -Wextra -Werror -O3 -march=native -g \
 		  $(addprefix -I, $(DINCLUDE))
 LDLIBS := $(addprefix -L, $(DINCLUDE))
 LDFLAGS := -lmlx -lft -lftprintf -lXext -lX11 -lm
