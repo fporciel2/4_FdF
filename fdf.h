@@ -6,7 +6,7 @@
 /*   By: fporciel <fporciel@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/18 15:04:10 by fporciel          #+#    #+#             */
-/*   Updated: 2023/12/02 14:23:49 by fporciel         ###   ########.fr       */
+/*   Updated: 2023/12/03 10:52:26 by fporciel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 /*
@@ -57,11 +57,19 @@
 # define MIDX	960
 # define MIDY	540
 
-# define STARTX	480
-# define STARTY	270
+# ifndef STARTX
+#  define STARTX	480
+# endif
+# ifndef STARTY
+#  define STARTY	270
+# endif
 
-# define ENDX	1440
-# define ENDY	810
+# ifndef ENDX
+#  define ENDX	1440
+# endif
+# ifndef ENDY
+#  define ENDY	810
+# endif
 
 # define WHITE		0xffffff
 # define RED		0xe80c0c
