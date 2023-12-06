@@ -62,7 +62,10 @@ static int	fdf_clean_all(t_fdf *fdf)
 	if (fdf->win != NULL)
 		mlx_destroy_window(fdf->dsp, fdf->win);
 	if (fdf->dsp != NULL)
+	{
 		mlx_destroy_display(fdf->dsp);
+		free(fdf->dsp);
+	}
 	return (0);
 }
 
